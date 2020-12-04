@@ -1,0 +1,34 @@
+<html>
+  <script>
+    // クッキーからデータを取得する(key: 変数名)
+    function getCookie(key) {
+      let data = '';
+      let cookies = document.cookie.split(';'); // splitすると使いやすい
+      // 引数で指定した変数を探す
+      for (let i = 0; i < cookies.length; i++) {
+        if (cookies[i].substr(0, key.length) == key) { // key部分取り出し
+          data = cookies[i].substr(key.length + 1, cookies[i].length); // 値部分取り出し
+          break;
+        }
+      }
+      return unescape(data); // unescape() デコード
+    }
+
+    // クッキーにデータを保存する (key: 変数名, data: 保存するデータ, days: 保存日数)
+    function setCookie(key, data, days) {
+      let msecs = days * 24 * 60 * 60 * 1000; // ミリ秒日（めもっとこ）
+      let now = new Date();
+      let expires = new Date();
+      expires.setTime(now.getTime() + msecs); // now+保存日数
+      // クッキーに書き込む escape() エンコード
+      document.cookid = key + '=' + escape(data) + '; ' + 'expires=' + expires.toGMTString() + ';';
+    }
+
+    // クッキーのデータをクリアする (key: 変数名)
+    function clearCookie(key) {
+      let expires = new Date();
+      expires.setTime(0);
+      document.cookie = key + '=a; ' + 'expires=' + expires.toGMTString() + '; '; // 保存期間を過去に設定で削除
+    }
+  </script>
+</html>

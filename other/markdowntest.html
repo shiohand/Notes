@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>markdowntest.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  </head>
+  <body>
+    <h1>Markdownまとめ</h1>
+    
+    <h2>heading</h2>
+    <p>
+      # h1<br>
+      ## h2<br>
+      ### h3<br>
+      #### h4<br>
+      ##### h5<br>
+      ###### h6
+    </p>
+    <p>##{#id} {.myclass} ?</p>
+
+    <h2>text</h2>
+    <p>
+      * em *<br>
+      ** strong **<br>
+      *** em+strong ***<br>
+      ~ sub ~<br>
+      ~~ s ~~<br>
+      [a](URL)
+    </p>
+    <p>
+      <em>em</em><br>
+      <strong>strong</strong><br>
+      <em><strong>em+strong</strong></em><br>
+      ~sub~<br>
+      <s>s</s><br>
+      <a href="URL">a</a>
+    </p>
+
+    <h2>table</h2>
+    <p>thead tbody th出ます</p>
+    <p>
+      |1-1|1-2|1-3|<br>
+      |:-:|-:|:-|<br>
+      |apple|bread|chocorate|<br>
+      |apple-pie|bread-chrumb|chocorate-cake|
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center">1-1</th>
+          <th style="text-align: right">1-2</th>
+          <th style="text-align: left">1-3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center">apple</td>
+          <td style="text-align: right">bread</td>
+          <td style="text-align: left">chocorate</td>
+        </tr>
+        <tr>
+          <td style="text-align: center">apple-pie</td>
+          <td style="text-align: right">bread-chrumb</td>
+          <td style="text-align: left">chocorate-cake</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>checkbox?</h2>
+
+    <ul>
+      <li><input type="checkbox"><label for="checkbox0">Item1</label></li>
+      <li><input type="checkbox" checked="true"><label for="checkbox1">Item2</label></li>
+      <li><input type="checkbox"><label for="checkbox2">Item3</label></li>
+    </ul>
+
+    <h2>list</h2>
+
+    <p>
+      * リスト<br>
+      * リスト<br>
+      1. リスト<br>
+      1. リスト 1でいいんだよ
+    </p>
+    <ul>
+      <li>リスト</li>
+      <li>リスト</li>
+    </ul>
+    <ol>
+      <li>リスト</li>
+      <li>リスト</li>
+    </ol>
+
+    <h2>hr</h2>
+
+    <p>---</p>
+
+    <h2>preインライン</h2>
+
+    <p>`バックティック`</p>
+    <p>インラインconsole.log(test);で</p>
+
+    <h2>pre複数行</h2>
+
+    <p>
+      ```言語<br>
+      バックティック<br>
+      ```
+    </p>
+
+    <p>
+      //複数行のソースコード<br>
+      $test = 'test';<br>
+      return $test
+    </p>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+関数
+無名関数
+アロー関数(無名関数)
+即時関数
+引数
+クロージャ
+即時関数バージョン
+タグ付きテンプレートリテラル
+------
+
+
+関数
+function 関数名(引数) {}
+
+無名関数
+let 関数名 = function(引数) {};
+
+アロー関数(無名関数)
+let 変数名 = (引数) => { 処理; };
+引数が一つの時()省略可能 処理が一文のとき{}省略可能 return不要
+省略など          const name = (引数) => {処理;}
+引数がひとつ      const name = 引数 => {処理たち;}
+処理がひとつ      const name = (引数たち) => 処理;
+リターンがひとつ  const name = (引数たち) => 戻す値; // オブジェクトリテラルの場合は({key: val;})
+
+即時関数 let宣言とか残らなくてよき 括弧忘れず
+(function() { 処理; }());
+(() => { 処理; }());
+
+引数
+データ型 値渡し, 参照型 参照渡し
+可変長引数(...obj)
+引数はargumentsオブジェクトからも利用できる
+  let func = function(val1, val2) { console.log(arguments.length); }
+  func(1, 2, 3); // 3
+引数の超過を回避
+  if (arguments.length !== 2) { エラー処理; }
+
+ちなみに
+関数宣言
+  function func() {}
+関数式
+  let obj = function() {};
+
+<script>
+' クロージャ ';
+' オブジェクト作るほどじゃないけど自分のプロパティ持ったメソッドがほしい ';
+' phpのstatic変数的な ';
+' Callオブジェクトを利用 ';
+
+  function closure(init) { // コンストラクタ的な
+    var counter = init; // プロパティ的な
+    return function() { // メソッド的な
+      return ++counter;
+    }
+  }
+
+  var myClosure1 = closure(10); // インスタンス化的な 戻り値:Function counter:10
+  myClosure1();                 // メソッド実行的な 戻り値:++counter counter:11
+  var myClosure2 = closure(20); //  戻り値:Function counter:20
+  myClosure2();                 // 戻り値:++counter counter:21
+  
+' 即時関数バージョン ';
+  var myClosure3 = (function(init) {
+    var counter = init;
+    return function() {
+      return ++counter;
+    }
+  })();
+</script>
+
+タグ付きテンプレートリテラル
+テンプレートリテラルで関数実行 解析するイメージ
+定義
+  function 関数名(第一引数, ...第二引数) {}
+  // function 関数名(第一引数, 第二引数, ...第三引数) {} など
+呼び出し(上:タグ付き、下:通常)
+  関数名`引数として送られる文字列と${第二引数で}${送られる文字列たち}です`;
+  関数名([`引数として送られる文字列と`, '', 'です'], 第二引数で, 送られる文字列たち);
+
+結果
+第一引数 [`引数として送られる文字列と`, '', 'です']
+第二引数 [第二引数で, 送られる文字列たち]
+
+第一引数は 文字列の配列 すきまは空文字
+第二引数は 可変長引数 Stringにはなっていないことに注意
+
+<script>
+  function escapeHtml(str) {
+    if (!str) {
+      return '';
+      str = str.replace(/&/g, '&amp');
+      str = str.replace(/</g, '&lt');
+      str = str.replace(/>/g, '&gt');
+      str = str.replace(/"/g, '&quot');
+      str = str.replace(/'/g, '&#39');
+    }
+    return str;
+  }
+  // タグ付きテンプレートリテラル用関数
+  // エスケープしながら分解されたtemplatesとvaluesを順に連結
+  function e(templates, ...values) {
+    let result = '';
+    for (let i in templates) {
+      result += templates[i] + escapeHtml(values[i]);
+    }
+    return result;
+  }
+  // 引数として文字列、埋め込む変数(可変長引数)、を受け取る
+  // 戻り値は文字列
+</script>
+
+<script>
+// テンプレート保存して代入できるクロージャつくっとる
+// https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Template_literals
+function template(strings, ...keys) {
+  return (function(...values) {
+    let dict = values[values.length - 1] || {}; // valuesの最終要素
+    let result = [strings[0]]; // strings冒頭
+    keys.forEach(function(key, i) { // プレースホルダとインデックス
+      let value = Number.isInteger(key) ? values[key] : dict[key]; // インデックス指定があればそれ、なければ引数の文字列
+      result.push(value, strings[i + 1]); // プレースホルダ, 文字列の順に追加
+    });
+    return result.join(''); // 連結
+  });
+}
+
+// let クロージャ = 関数名`文字列${0}${1}${'text'}`;
+// クロージャ('0に入れる文字列', '1に入れる文字列', { text: 'textに含める文字列'});
+
+let t1Closure = template`${0}${1}${0}!`;
+//let t1Closure = template(["","","","!"],0,1,0);
+t1Closure('Y', 'A');                      // "YAY!"
+
+let t2Closure = template`${0} ${'foo'}!`;
+//let t2Closure = template(["","","!"],0,"foo");
+t2Closure('Hello', {foo: 'World'}); // "Hello World!"
+
+let t3Closure = template`I'm ${'name'}. I'm almost ${'age'} years old.`;
+//let t3Closure = template(["I'm ", ". I'm almost ", " years old."], "name", "age");
+t3Closure('foo', {name: 'MDN', age: 30}); //"I'm MDN. I'm almost 30 years old."
+t3Closure({name: 'MDN', age: 30}); //"I'm MDN. I'm almost 30 years old."
+
+</script>

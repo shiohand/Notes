@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>
+    <button id="btn">ボタン</button>
+  </p>
+  <p>
+    <button onclick="addEventHdr()">イベントハンドラの追加</button>
+    <button onclick="sendEventProc()">イベントの送信</button>
+  </p>
+
+  <script>
+    // addEventListenerの使えないブラウザにも対応
+
+    function eventFunc(event) {
+      event = event || window.event;
+      alert('イベントタイプ：' + event.type);
+      return true;
+    }
+    function addEventHdr() {
+      let e = document.getElementById('btn');
+      if (e == null) {
+        return ;
+      }
+      if (window.addEventListener) { // addEventListenerが有効かチェック
+        e.addEventListener('click', eventFunc, false);
+      } else {
+        e.attachEvent('onclick', eventFunc);
+      }
+    }
+    function sendEventProc() {
+      let e = document.getElementById('btn');
+      if (e == null) {
+        return ;
+      }
+      if (document.createEvent) { // createEventが有効かチェック
+        let evt = document.createEvent('MouseEvents');
+        evt.initEvent('click', false, true);
+        e.dispatchEvent(evt);
+      } else {
+        e.fireEvent('onclick', evt);
+      }
+    }
+  </script>
+</body>
+</html>

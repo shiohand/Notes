@@ -1,0 +1,109 @@
+HTMLFormElement
+HTMLLabelElement
+コントロール共通
+HTMLButtonElement
+HTMLSelectElement
+HTMLOptionElement
+HTMLInputElement
+HTMLTextAreaElement
+Input, TextAreaメソッド
+------
+
+○HTMLFormElement
+プロパティ
+  length    コントロール数
+  name
+  action
+  enctype
+  encoding
+  method
+  target
+  elements    hc フォーム内のコントロール
+メソッド
+  submit()
+  reset()
+
+○HTMLLabelElement
+プロパティ
+  control     labelの適用要素
+
+○コントロール共通
+
+プロパティ
+親フォーム
+  form            HTMLFormElement
+  formAction他  w  Enctype, Methodなど
+Option除く
+  name       w
+  type       w
+  disabled   w   bool
+  autofocus  w   bool
+  value      w
+  validity       ValidityState
+    valid, badInputなど
+  required   w   bool Button除く
+メソッド
+  checkValidity()  bool
+    Option, Label, Button:reset除く
+
+○HTMLButtonElement
+プロパティ
+  labels    nl
+
+○HTMLSelectElement
+プロパティ
+  labels       nl
+  length       optionの数
+  multiple  w  bool
+  options      HTMLOptionsCollection
+  selectedIndex
+  selectedOptions
+メソッド
+  add(n[, index])     optionを末尾に追加
+    indexを指定すればその直前
+  remove(index)     削除
+  item(), namedItem()     HTMLCollectionの感じ
+
+○HTMLOptionElement
+プロパティ
+  disabled  w      bool
+  value     w
+  label     w      elm
+  selected  w      bool
+  text      w
+
+○HTMLInputElement
+○HTMLTextAreaElement
+プロパティ
+checkbox, radio
+  checked         w  bool
+  defaultChecked  w  bool
+  indeterminate   w  bool 不定状態
+text, number, textarea
+  placeholder     w
+  max/minLength   w
+  readOnly        w  bool
+  autocomplete    w  textarea除く
+  max/min         w  textarea除く
+  size            w  textarea除く
+  rows/cols       w  textareaのみ
+image
+  alt             w  str
+  height/width    w  str
+  src             w  str
+file
+  accept          w  str
+  files           w  FileListオブジェクト
+text, password, textarea    search, tel, url, week, month
+  selectionStart      w  選択始点、カーソル位置
+  selectionEnd        w  選択終点、カーソル位置
+  selectionDirection  w  選択方向
+    forward, backward, none
+
+○Input, TextAreaメソッド
+  select()    選択状態に
+  setSelectionRange(    任意範囲
+  start, end[, direction])
+  setRangeText(文字列)    置換
+  setRangeText(文字列,    範囲置換
+  start, end[, 選択状態])

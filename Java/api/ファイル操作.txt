@@ -1,0 +1,59 @@
+java.nio.file
+
+/* FileSystems */
+*getDefault()        FileSystem デフォルト
+getPath(String path) Path 文字列で指定
+
+// 例
+var fs = FileSystems.getDefault();
+var path = fs.getPath("path");
+
+
+/* Files */
+メソッド static
+
+exists(path)        存在するか
+isReadable(path)    読み取り可能か
+isWritable(path)    書き込み可能か
+isExecutable(path)  実行可能か
+isDirectory(path, LinkOptions...)
+isHidden(path)      隠しファイルか
+
+createFile(path, FileAttribute<?>...)       Path 既にある場合は失敗
+createDirectory(path, FileAttribute<?>...)  Path
+copy(path1, path2, CopyOption...)           Path 1を2へコピー、置換
+move(path1, path2, CopyOption...)           Path 1を2へ移動、ファイル名変更
+
+delete(path)         void ファイルが無いとエラー
+deleteIfExists(path) boolean ファイルがなければ実行せずfalse
+
+size(path)                                         ファイルサイズ取得
+getAttribute(path, attrStr, LinkOption...)         Object
+getLastModifiedTime(path, LinkOptions...)          FileTime
+getOwner(path, LinkOption...)                      UserPrincipal
+setAttribute(path, attrStr, value, LinkOption...)  Path
+
+lines(path[, Charset])  Stream<String>
+list(dir)               Stream<Path> ディレクトリ内のエントリのストリーム
+
+newBufferedReader(path[, Charset])
+newBufferedWriter(path[, Charset][, OpenOption...])
+newInputStream(path, OpenOption...)
+newOutputStream(path, OpenOption...)
+
+// StandardCopyOption
+ATOMIC_MOVE       原始的なファイル・システム操作としてファイルを移動(？)
+COPY_ATTRIBUTES   属性をコピー
+REPLACE_EXISTING  ファイルが存在する場合は置換
+
+// 例
+var path2 = Files.copy(path, fs.getPath("path2"), StandardCopyOption.REPLACE_EXISTING);
+System.out.println(Files.exists(path2)); // true
+
+var dir = Files.createDirectory(fz.getPath("dir"));
+
+var stream = Files.list(dir);
+stream.filter(v -> v.getFileName().toString.endWith(".log")) // ファイルネームが.logで終わる要素のリスト
+  .forEach(System.out::println) // に、println
+
+Files.move(dir, fs.getPath("dir2"), StandardCopyOption.REPLACE_EXISTING);

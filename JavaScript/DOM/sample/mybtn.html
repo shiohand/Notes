@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    .mybtn {
+      border: solid 1px #c0c0c0;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      background-color: #e8e8e8;
+      cursor: pointer;
+    }
+    #btns {
+      border-collapse: separate;
+      border-spacing: 4px 0;
+      display: table;
+    }
+  </style>
+  <script>
+    // ボタンのコンストラクタ
+    function MyBtn(name, w, h, proc) {
+      // ボタン生成
+      this.e = document.createElement('div');
+      this.e.setAttribute('id', 'div1');
+      this.e.setAttribute('class', 'mybtn');
+      this.e.innerHTML = name;
+
+      this.e.style.width = w + 'px';
+      this.e.style.height = h + 'px';
+
+      // イベント追加
+      this.e.addEventListener('mousedown', function() {
+        this.style.background = 'yellow';
+      }, false);
+      this.e.addEventListener('mouseup', function() {
+        this.style.background = '#e8e8e8';
+      }, false);
+      this.e.addEventListener('click', proc, false); // proc()
+    }
+
+    function proc() {
+      // あたりボタン作成
+      let btn1 = new MyBtn('ボタン1', 100, 30, function() {
+        alert('あたり');
+      });
+      // はずれボタン作成
+      let btn2 = new MyBtn('ボタン2', 200, 30, function() {
+        alert('はずれ');
+      });
+
+      // 追加
+      let btns = document.getElementById('btns');
+      btns.appendChild(btn1.e);
+      btns.appendChild(btn2.e);
+    }
+
+  </script>
+  <title>Document</title>
+</head>
+<body onload="proc()">
+  <h1>だからなにとか言わない</h1>
+  <div id="btns"></div>  
+</body>
+</html>

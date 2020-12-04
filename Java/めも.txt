@@ -1,0 +1,207 @@
+Java
+型
+配列
+演算子
+制御構文
+めもold
+
+Java
+
+package宣言 package xx.xx.xx;
+import宣言  import java.xx.xx;
+class宣言   public class Cls {}
+mainメソッド(エントリーポイント)
+  public static void main(String[] args) {}
+final修飾   final int VALUE = 10;
+  参照型は知ってのとおりだがStringは不変になれる
+
+// メンバ
+フィールド, メソッド, コンストラクターなど
+
+/* 型 
+---------------------------------------- */
+
+// プリミティブ
+byte, short, int, long, float, double, char, boolean
+booleanに暗黙型変換(0とか空文字とか)は無い
+
+// 型推論
+var
+使っていい ローカル変数 定数 for文の仮変数 try-with-resource など
+使えない　 フィールド メソッドやコンストラクタの定義 catchブロック など
+使わない   スーパークラスやインターフェースなど、上位の型で受ける場合
+
+// 数値型と他の型の+演算子の仕様
+String含む　　 -> String
+String含まない -> error
+
+// 型サフィックス(大文字でも小文字でも)
+long   100L
+float  3.5F
+double 3D
+// 数値セパレーター(読みやすさのため) 宣言のときだけ
+var val = 1_234_123;
+
+// 型変換
+byte short int long float double
+     char
+// 暗黙型変換(大きい方のみ)
+   int in = 100;
+String st = in;   // error
+  long lo = in;   // ok
+   int in = lo;   // error
+// キャスト
+// さすがにString絡んだら無理
+ int in = (int)lo;  // ok
+byte by = (byte)in; // error
+// 整数リテラルとint
+byte by = 1 + 1;  // 演算した時点で整数リテラルはintになるため不可
+
+/* 配列
+---------------------------------------- */
+int[] list = {1, 2, 3};  // 配列宣言 宣言時のみnew省略可能
+int[] list = new int[]{1, 2, 3}; // newを省略しない場合
+  var list = new int[]{1, 2, 3}; // varは省略できない
+int[] list = new int[3]; // 要素数のみ先に定義可能
+Cls[] clss = new Cls[3]; // オブジェクトおｋ
+
+int[][] list = {  // 多次元配列 基本は同じ
+  {11, 12, 13},
+  {21, 22, 23},
+  {31, 32},       // 要素数が揃っていない配列を ジャグ配列 という
+};
+int[][] list = new int[3][]; // [][3]とかはできない
+
+/* 演算子
+---------------------------------------- */
++ - * / %
+& | ^ ~ << >> >>> // ビット
+== != < > <= >= ?:
+
+// 論理演算
+&& || ! // 短絡演算
+& | ^   // 非短絡演算 JavaとかCとかだけなんだね
+
+/* 制御構文
+---------------------------------------- */
+if (式) {}
+else if (式) {}
+else {}
+
+// switch文(従来の構文)
+// アロー演算子の利用やswitch式については別ファイル
+switch(定数) {
+  case 値1:
+    break;
+  case 値2: case 値3:
+    break;
+  default:
+    break;
+}
+// Enum型を定数とした場合
+// その型の持つ列挙子を網羅する必要がある(defaultは不要)
+enum Teams {　RED, WHITE　}
+var a = Teams.RED;
+switch(a) {
+  case RED: // Teams.REDじゃなくていいよ
+    break;
+  case WHITE:
+    break;
+}
+
+// ループ
+// ループ内でのtry-catchは重いのでどうしても必要なときだけにする
+
+while(式) {}
+
+do {} while(式);
+
+for(初期化式; 条件式, コンマ可能; 増減式) {}
+
+// 拡張for(iterable)
+for(型 仮変数 : iterable) {}
+// 例
+for (var value : data) {
+  System.out.println(value);
+}
+// 意図しない仮変数への操作を避けるためにfinalするケース
+for (final String value : data) {}
+
+// break, continue, label:
+lbl:
+for (var i = 0; i < 10; i++) {
+  for (var j = 0; j < 10; j++) {
+    // 処理;
+    if (bool) {
+      break lbl;
+    } else {
+      continue lbl;
+    }
+  }
+}
+
+
+
+ログ
+System.out.println()
+System.out.print(); // 改行しない出力
+
+nullチェック
+if (val != null && isFoo(val))
+
+/* めもold
+---------------------------------------- */
+
+publicと省略　省略→同一パッケージ内
+フォルダ替えたら　f1 > clean the java language server workspace > restart
+
+ コンストラクタ
+    1.メソッド名とクラス名が一致 2.戻り値を記入しない
+    public クラス名 {}
+    new 直後に実行
+クラス名生成と同時にそのクラス名のメソッドが動く
+引数で受け取れるようになる
+オーバーロードできる
+ひとつも定義しない場合、例外としてデフォルトコンストラクタが実行される
+コンストラクタ内の一行目では、　this()　で、同クラスのコンストラクタの呼び出しをJVMに依頼できる。
+
+  フィールド初期値設定パターン
+1.宣言時に初期値指定
+2.静的初期化ブロックで代入　（知らん
+3.初期化ブロックで代入　（知らん
+4.こんすとらくたで代入
+
+class < abstract < interface
+  public interface Human extends Creature
+    interface Creture を extends した interface Human
+
+Ctrl+Shift+k  一行削除
+Ctrl+/  コメントアウト
+public static 戻り値の型 メソッド名(引数) {呼び出されたときの処理}
+  メソッドの定義
+
+System.out.print();
+  文字表示
+Math.max(a, b);
+  aとb、大きいほうの数値
+Integer.parseInt(a);
+  文字列を数値に変換
+new java.util.Random() .nextInt(a);
+  a未満のランダムな数を生成
+new java.util.Scanner(System.in) .nextLine();
+  一行の文字列の入力を受け付ける
+new java.util.Scanner(System.in) .nextInt();
+  一つの整数の入力を受け付ける
+a.equals("b")
+  文字列型aとbを比較
+a.length
+  aという配列の要素の数
+a.length()
+  aという文字列の長さ(文字数)
+
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+  System.out.println("縦の長さを入力してください");
+  int height = Integer.parseInt(br.readLine());
+
+elseif は条件の厳しいほうが先。catchと一緒。
+& | よりは && || のほうが評価処理が減るのでお得。

@@ -1,0 +1,55 @@
+tag                 タグ一覧表示
+tag [tagname]       現在のコミットIDにタグを関連付け
+tag -a [tagname] -m "[message]" 注釈付きタグ
+tag -am "[message]" [tagname]   注釈付きタグ(省略形？)
+tag -d [tagname]    指定したタグの削除
+
+/* ========================================
+  タグの利用
+======================================== */
+
+/* ただのリポジトリ作成とファイル投入
+---------------------------------------- */
+
+$ mkdir tutorial
+$ cd tutorial
+$ git init
+
+Initialized empty Git repository in /Users/eguchi/Desktop/tutorial/.git/
+
+$ git add myfile.txt
+$ git commit -m "first commit"
+
+[master (root-commit) a73ae49] first commit
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 myfile.txt
+
+
+/* 軽量タグセット
+---------------------------------------- */
+
+$ git tag apple
+
+$ git tag
+
+apple
+
+$ git log --decorate
+
+commit e7978c94d2104e3e0e6e4a5b4a8467b1d2a2ba19 (HEAD, tag: apple, master)
+Author: yourname <yourname@yourmail.com>
+Date:   Wed Jul 18 16:43:27 2012 +0900
+
+    first commit
+
+
+/* 注釈付きタグセット
+---------------------------------------- */
+
+$ git tag -am "サル先生のGit" banana
+
+// タグとコメントの一覧
+$ git tag -n
+
+apple           first commit
+banana          サル先生のGit

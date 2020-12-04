@@ -1,0 +1,21 @@
+java.util.Arrays
+
+基本staticメソッド 配列操作
+
+asList(T... arr)    List<T>を返す
+
+equals(arr1, arr2)    boolean
+compare(arr1, arr2)   int 比較で正負 一致していれば0
+mismatch(arr1, arr2)  int 始めの不一致 全て一致の場合は-1
+  ※以上の引数には範囲指定や参照型のためのComparator指定が可能
+    [, 開始1, 終了1, 開始2, 終了2] 範囲指定
+    [, Comparator<? super T>]  参照型のみ
+
+copyOf(配列, 要素数)
+copyOfRange(配列, 開始, 終了) 範囲外は無視 空きはfalse/0/nullなどで埋める
+  ※シャローコピーである
+
+fill(配列[, 開始, 終了], 要素) 要素を代入 範囲指定なしの場合全部
+
+sort(配列[, 開始, 終了])
+binarySearch(arr[, 開始, 終了], 対象)  事前にソート必須

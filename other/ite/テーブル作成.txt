@@ -1,0 +1,75 @@
+バッククォート、シングルクォートについてぐぐｒ
+
+社員マスタ
+emp_code     INT          PRIM 社員番号
+emp_name     VARCHAR(60)  NULL 社員名
+dep_name     VARCHAR(60)  NULL 部署名
+join_date    DATE         NULL 入所日
+retire_date  DATE         NULL 退職日
+
+
+/* CREATE TABLE
+---------------------------------------- */
+CREATE TABLE データベース.テーブル (
+  カラム名 データ型 制約,
+  ...
+);
+
+制約
+// NULL
+// DEFAULT NULL
+// NOT NULL
+// COMMENT
+
+/*
+CREATE TABLE m_employee (
+  emp_code int(11) NOT NULL COMMENT '社員番号',
+  emp_name varchar(60) DEFAULT NULL COMMENT '社員名',
+  dep_name varchar(60) DEFAULT NULL COMMENT '部署名',
+  join_date date DEFAULT NULL COMMENT '入所日',
+  retire_date date DEFAULT NULL COMMENT '退職日'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='社員マスタ';
+*/
+
+テーブル作成
+
+/* ALTER TABLE
+---------------------------------------- */
+ALTER TABLE データベース.テーブル
+  ADD カラム名 データ型 制約,
+  ADD PRIMARY KEY(カラム1, カラム2, ...),
+  DROP カラム名,
+  DROP PRIMARY KEY,
+  CHANGE COLUMN カラム名 新しいカラム名 データ型 制約;
+
+※ADD PRIMARY KEY(...カラム名), DROP PRIMARY KEY; で主キーの追加削除
+※CHANGE COLUMNでは変更する制約や名前だけでなく全ての情報を指定すること
+
+ALTER TABLE データベース.テーブル
+  ADD カラム名 データ型 制約,
+  ...
+  ADD カラム名 データ型 制約;
+
+制約
+// AFTER カラム名
+
+/*
+ALTER TABLE sample.m_employee
+  ADD post_name VARCHAR(60) NULL COMMENT '役職' AFTER retire_date;
+  ADD grad_name VARCHAR(60) NOT NULL COMMENT '等級' AFTER post_name;
+  ADD address VARCHAR(120) NOT NULL COMMENT '住所';
+
+ALTER TABLE sample.m_employee
+  DROP address;
+
+ALTER TABLE sample.m_employee
+  CHANGE COLUMN post_name post_name VARCHAR(80) NULL COMMENT '役職' AFTER retire_date
+*/
+
+テーブル編集
+
+/* DROP TABLE
+---------------------------------------- */
+DROP TABLE テーブル
+
+テーブル削除

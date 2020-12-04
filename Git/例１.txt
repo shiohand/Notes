@@ -1,0 +1,266 @@
+
+init          初期化
+add [filename]         インデックスに登録
+commit -m "[comment]"  コミットメッセージ付き
+branch                               ブランチ一覧表示
+branch [branch]                      ブランチ作成
+branch -d [branch]                   ブランチを削除
+checkout [branch]             ブランチを変更する
+checkout -b [branch]          ブランチを作成して変更
+merge [branch]  現在のブランチと他のブランチとマージする
+reset --hard HEAD@{[number]}  指定した状態(reflogで取得)に戻す
+
+
+/* ========================================
+  リポジトリ作成と利用
+======================================== */
+
+
+/* ただのコマンドラインディレクトリ作成
+---------------------------------------- */
+
+$ mkdir tutorial
+$ cd tutorial
+
+/* リポジトリ作成
+---------------------------------------- */
+
+$ git init
+
+Initialized empty Git repository in /Users/eguchi/Desktop/tutorial/.git/
+// .gitフォルダが追加された
+
+/* インデックスへファイルの追加 コミット
+---------------------------------------- */
+
+$ git add myfile.txt
+$ git commit -m "first commit"
+
+[master (root-commit) a73ae49] first commit 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 myfile.txt
+
+// 現在の履歴
+// master(HEAD)
+
+
+/* ========================================
+  ブランチの作成と利用
+======================================== */
+
+/* ブランチ作成 閲覧(現在のブランチには*印)
+---------------------------------------- */
+
+$ git branch issue1
+$ git branch
+
+  issue1
+* master
+
+
+/* ブランチ移動
+---------------------------------------- */
+
+$ git checkout issue1
+
+Switched to branch 'issue1'
+
+// "git checkout -b issue1" とすると、ブランチの作成とチェックアウトを同時に行える
+
+
+/* ファイルの追加 コミット
+---------------------------------------- */
+
+$ git add myfile.txt
+$ git commit -m "○○の説明を追加"
+
+[issue1 b2b23c4] ○○の説明を追加
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+// 現在の履歴
+// master -> issue1(HEAD)
+
+
+/* masterブランチに移動 ブランチのマージ
+---------------------------------------- */
+
+$ git checkout master
+
+Switched to branch 'master'
+
+$ git merge issue1
+
+Updating 1257027..b2b23c4
+Fast-forward
+ myfile.txt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+// 現在の履歴
+// ... -> master, issue1(HEAD)
+
+
+/* ブランチの削除
+---------------------------------------- */
+
+$ git branch -d issue1
+
+Deleted branch issue1 (was b2b23c4).
+
+$ git branch
+
+* master
+
+// 現在の履歴
+// ... -> master(HEAD)
+
+
+/* ========================================
+  複数のブランチの利用
+======================================== */
+
+
+/* 複数のブランチを作成
+---------------------------------------- */
+
+$ git branch issue2
+$ git branch issue3
+$ git checkout issue2
+
+Switched to branch 'issue2'
+
+
+$ git branch
+
+* issue2
+  issue3
+  master
+
+// 現在の履歴
+// ... -> master, issue2(HEAD), issue3
+
+
+/* それぞれ編集
+---------------------------------------- */
+
+$ git add myfile.txt
+$ git commit -m "□□の説明を追加"
+
+[issue2 8f7aa27] □□の説明を追加
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+$ git checkout issue3
+
+Switched to branch 'issue3'
+
+$ git add myfile.txt
+$ git commit -m "△△の説明を追加"
+
+[issue3 e5f91ac] △△の説明を追加
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+// 現在の履歴
+// ... -> master -> issue2
+//               -> issue3(HEAD)
+
+
+/* ふたつのブランチをmasterにマージしてみる
+---------------------------------------- */
+
+$ git checkout master
+
+Switched to branch 'master'
+
+/* issue2をマージ(fast-forward) */
+$ git merge issue2
+
+Updating b2b23c4..8f7aa27
+Fast-forward
+ myfile.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+// 現在の履歴
+// ... -> master(HEAD), issue2
+//     -> issue3
+
+/* issue3をマージ(オートマージング失敗) */
+$ git merge issue3
+
+Auto-merging myfile.txt
+CONFLICT (content): Merge conflict in myfile.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+
+/* 競合部分を修正してマージする
+---------------------------------------- */
+
+// ファイル内の競合のあった箇所に競合部分が提示されている
+// 競合部分を修正してコミット
+
+$ git add myfile.txt
+$ git commit -m "issue3ブランチをマージ"
+
+# On branch master
+nothing to commit (working directory clean)
+
+// 現在の履歴
+// ... -> issue2 -> master(HEAD)
+//     -> issue3 -^
+
+
+/* rebaseを利用してマージ(合流だけじゃなくて履歴も合体して一本に)
+---------------------------------------- */
+
+// 別パターンやるためにちょっと戻すだけ
+$ git reset --hard HEAD~
+
+// 現在の履歴
+// ... -> master(HEAD), issue2
+//     -> issue3
+
+
+// チェックアウト
+$ git checkout issue3
+
+Switched to branch 'issue3'
+
+
+// masterに対してrebase(myfile.txtで競合発生)
+$ git rebase master
+
+First, rewinding head to replay your work on top of it...
+Applying: △△の説明を追加
+Using index info to reconstruct a base tree...
+<stdin>:13: new blank line at EOF.
++
+warning: 1 line adds whitespace errors.
+Falling back to patching base and 3-way merge...
+Auto-merging myfile.txt
+CONFLICT (content): Merge conflict in myfile.txt
+Failed to merge in the changes.
+Patch failed at 0001 △△の説明を追加
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To check out the original branch and stop rebasing run "git rebase --abort".
+
+
+// 競合箇所を修正し、--continueで続き(rebase完了)
+$ git add myfile.txt
+$ git rebase --continue
+
+Applying: △△の説明を追加
+
+
+// 再度マージ(fast-forward可能になっている)
+$ git checkout master
+
+Switched to branch 'master'
+
+$ git merge issue3
+
+Updating 8f7aa27..96a0ff0
+Fast-forward
+ myfile.txt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+// 現在の履歴
+// ... -> issue2 -> master(HEAD), issue3

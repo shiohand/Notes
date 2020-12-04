@@ -1,0 +1,139 @@
+
+
+修飾子の記述順
+
+public protected private
+abstract
+static
+final
+transient
+volatile
+synchronized
+native
+strictfp
+
+/* ---------------------------------------- */
+
+参照型の変数にサブクラスの要素を代入したとき
+引数に利用した場合は宣言型とみなされる
+配列の中も一緒
+// public void show(StringBuffer buf) {
+//   // 処理S
+// }
+// public void show(CharSequence cs) {
+//   // 処理C
+// }
+// var list = new CharSequence[] {
+//   "String",
+//   new StringBuilder("sb")
+// };
+// for (var cs : list) { show(cs); } // 全て処理C
+
+/* ---------------------------------------- */
+
+Cls obj1 = new SubCls();
+if (obj1 instanceof SubCls) {
+  SubCls obj2 = (SubCls)obj1;
+}
+// objの型がSubClsのインスタンスか(ダウンキャストできるか)
+
+/* ---------------------------------------- */
+
+可変長引数
+public void hgoe(int... x)
+
+/* ---------------------------------------- */
+
+インポートについて
+// オンデマンドインポート(ワイルドカード)
+別に重くなるわけじゃない。型を使うまでは名前の情報だけなので。
+基本だが、サブパッケージは読み込まない
+
+// staticインポート
+import static Cls.method
+とすると、静的メソッド(method)をクラス名を省いて利用できる
+var val = method();
+Mathとかで使うことがあるけど自クラスのメソッドと区別つきづらくなるから必要なときだけ
+
+
+// 単純名が衝突した場合の優先順位
+現在のファイル内で定義された型
+単一型インポートの型
+同一パッケージの型
+オンデマンドインポートの型
+
+なお、完全修飾名を利用したほうがわかりやすい
+また自分で型を定義する場合は標準ライブラリとの重複を気にするべき
+
+/* ---------------------------------------- */
+
+アノテーション
+
+@Override
+バグ防止
+
+/* ---------------------------------------- */
+
+superによるスーパークラスの呼び出し
+super()         コンストラクター
+super.medhod()  メソッドなどメンバ
+
+/* ---------------------------------------- */
+
+クラスを定義する際のオーバーロード
+toString   するべき(ログとかでは特に)
+equals     必要であれば(反射性・対称性・推移性・一貫性のルールを守る)
+hashCode   equalsをオーバーロードした場合は特に eclipse任せでもよい
+clone      型が一致している、同地性を満たすなど当然のこと シャローコピーの混入に注意(参照型のフィールドは.cloneするなど)
+compareTo  Comparableインターフェース
+
+/* ---------------------------------------- */
+
+よく利用される英語
+
+add remove,delete
+get set
+insert replace
+begin end
+start stop
+open close
+send recieve
+create initialize, initialize
+is can
+
+ファクトリーメソッドでよく使われる命名
+
+empty       空のインスタンスを生成
+valueOf     引数の値を持つインスタンスを取得
+of          valueOf
+from        クラスA.from(クラスB) のような変換
+getInstance インスタンスを取得(新しいとは限らない)(シングルトンとか)
+newInstance インスタンスを生成
+
+/* ---------------------------------------- */
+
+/* Optionalクラス */
+  nullチェックの簡易化
+  Optional.ofNullable 与えられた型でOptional<T>を返す
+  インスタンス.orElse(rtn) // nullだったらrtnを返す
+  PHPでいうところのinstance ?? "";やな
+// Optional<String>を返す例
+public Optional<String> getTitleByIsbn(String isbn) {
+  return Optional.ofNullable(this.data.get(isbn));
+}
+var optTitle = b.getTitleHonyaHonya("nyao");
+var title = optTitle.orElse("other"); // nullならotherの戻り値
+
+// メソッド
+empty()          生成 空
+of(val)          生成 nullだと例外
+ofNullable(val)  生成 nullだと空
+isPresent()      nullかどうか
+orElse(other)                     nullならotherの戻り値
+orElseGet(Supplier<? extends T>)  nullならラムダ式の戻り値
+
+/* ---------------------------------------- */
+
+JShell
+  REPL(Read-eval-print loop)
+  コマンドライン上で対話式に実行できる

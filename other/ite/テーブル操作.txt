@@ -1,0 +1,59 @@
+/* INSERT
+---------------------------------------- */
+INSERT INTO テーブル(フィールド1, フィールド2, ...) VALUES(値1, 値2, ...)
+
+※VALUES()に入れる値について、NULLのときは明示的にNULL
+
+/* UPDATE
+---------------------------------------- */
+UPDATE テーブル SET フィールド名1 = 値1, フィールド名2 = 値2, ... WHERE 条件文;
+
+/* DELETE
+---------------------------------------- */
+DELETE FROM テーブル WHERE 条件文;
+
+// DELETE FROM m_employee WHERE retire_date <= '2008-03-31';
+
+/* SELECT
+---------------------------------------- */
+SELECT * FROM テーブル名 WHERE 条件文;
+SELECT カラム1, カラム2, ... FROM テーブル名 WHERE 条件文;
+
+条件文
+// IS NULL
+// IS NOT NULL
+
+// SELECT emp_code, cmp_name, dep_name FROM m_employee WHERE (dep_name <> 'システム管理部') AND (retire_date IS NULL);
+整形版
+// SELECT
+//   emp_code,
+//   cmp_name,
+//   dep_name
+// FROM
+//   m_employee
+// WHERE
+//   (dep_name <> 'システム管理部') AND
+//   (retire_date IS NULL);
+
+// SELECT
+//   emp_code,
+//   cmp_name,
+//   dep_name
+// FROM
+//   m_employee
+// WHERE
+//   (join_date >= '2000-01-01') AND
+//   (retire_date IS NULL);
+
+// SELECT
+//   emp_code,
+//   cmp_name,
+//   dep_name
+// FROM
+//   m_employee
+// WHERE
+//   (retire_date IS NOT NULL);
+
+/* ORDER BY */
+ORDER BY カラム名 ASC
+ORDER BY カラム名 DESC

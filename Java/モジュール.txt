@@ -1,0 +1,6 @@
+モジュール情報ファイルを編集
+
+java.net.httpモジュールの適用
+module もじゅーる {
+  requires java.net.http;
+}

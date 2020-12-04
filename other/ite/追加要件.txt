@@ -1,0 +1,32 @@
+利用者マスタ
+user_id   VARCHAR(20)   PRIM  利用者ID
+user_name VARCHAR(60)         利用者名
+user_pwd  VARCHAR(256)        利用者パスワード
+  (暗号化)
+auth_id   INT(11)             操作権限ID
+  (10:MR 20:管理部門)
+
+/* パスワード
+---------------------------------------- */
+
+AES_ENCRYPT(文字列, キー)   -> AES文字列
+AES_DECRYPT(AES文字列, キー)  -> 文字列
+HEX(文字列)   -> 16進数
+UNHEX(16進数) -> 文字列
+
+$key = 共通のキー文字列
+$pass = 入力するパス
+$aesPass = データベースに保存されているパス
+
+// 暗号化SQL
+//   pass + aes_enc(key) + hex()
+HEX(AES_ENCRYPT($pass, $key))
+
+// 複合化SQL
+//   aes_pass - hex() - aes_dec(key) + 文字コード調整
+COMVERT(AES_DECRYPT(UNHEX($aesPass, $key)) USING utf8)
+
+/*
+INSERT INTO m_user(user_id, user_name, user_pwd, auth_id) VALUES('suzuki', '鈴木次郎', HEX(AES_ENCRYPT('suzuki', 'H3a5Aa3pCvGm')), '20');
+INSERT INTO m_user(user_id, user_name, user_pwd, auth_id) VALUES('yamada', '山田太郎', HEX(AES_ENCRYPT('yamada', 'H3a5Aa3pCvGm')), '10');
+*/

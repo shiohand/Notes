@@ -1,0 +1,112 @@
+iterable、array-like
+イテレータ
+ジェネレータ
+------
+
+iterable、array-like
+
+  array-like
+lengthプロパティがある
+インデックス付けされた要素を持つ
+
+  iterable
+Symbol.iteratorを実装している
+スプレッド構文を使える
+
+array-like且つiterableなオブジェクト
+(上はforEach()を持っている)
+  Map, Set, String, NodeList, DOMTokenList
+  arguments, HTMLCollection, NamedNodeMapなど
+
+
+イテレータ
+
+オブジェクトの内容を列挙する
+next()メソッドを実行すると、
+doneとvalueを持つオブジェクト、イテレータリザルトを返す
+
+最後まで行ったらもう使えないの？ → 使えないけどまたobj[Symbol.iteartor]()したらいいんだよ
+
+イテレータを持つオブジェクト(Arrayなど)は使える
+イテラブルなオブジェクトと呼ぶ
+
+イテレータの例
+イテラブルなオブジェクト(Array, Map, Set, String, 他)から取得
+values()とかentries()とかメソッドもあるね
+<script>
+let arr = [1, 2, 3];
+
+let itr1 = arr.values(); // arr[Symbol.iterator]()と同じ
+console.log(itr.next()); // Object {value: 1, done: false}
+console.log(itr.next()); // Object {value: 2, done: false}
+console.log(itr.next()); // Object {value: 3, done: false}
+console.log(itr.next()); // Object {value: true, done: undefined}
+</script>
+
+イテラブルなオブジェクトの作成
+結構無骨だね
+<script>
+let obj = {};
+obj[Symbol.iterator] = function() { // Symbol.iteratorがイテレータオブジェクトを表す
+  let itr = {};
+  let count = 1;
+  itr.next = function() { // next()
+    let itrResult = (count <= 3) // 今回はみっつにしてみました
+      ? {value: count++, done: false} // value doneはfor...ofとかで必要
+      : {value: undefined, done: true}; // done: true 繰り返し終了
+    return itrResult;
+  };
+  return itr;
+};
+
+// 使用
+let iterator = obj[Symbol.iterator]();
+let iteratorResult;
+while(true) {
+  iteratorResult = iterator.next();
+  if (iteratorResult.done) {
+    break;
+  }
+  console.log(iteratorResult.value);
+}
+// つまりこう
+for (let val of obj) { // valはiteratorResult.valueなのですね
+  console.log(val);
+} // 1 2 3
+</script>
+
+ジェネレータ
+簡単にイテレータをつくれる君
+  function* 関数名() {}
+  function*() {}
+  *関数名() {}
+<script>
+function* myGenerator() {
+  yield 'あいうえお'; // yieldはreturnみたいに値を返す
+  yield 'かきくけこ'; // 次にmyGenerator()が実行されたら続きを処理
+  yield 'さしすせそ';
+}
+myGenerator(); // あいうえお
+myGenerator(); // かきくけこ
+myGenerator(); // さしすせそ
+// つまりこう
+for (let val of myGenerator()) {
+  console.log(val);
+} // あいうえお かきくけこ さしすせそ
+</script>
+
+コンストラクタでイテレータ定義(ジェネレータ)
+<script>
+class　Myiterator {
+  constructor(data) { // 配列をもらいましょうか
+    this.data = data;
+    this[Symbol.iterator] = function*() { // 順番に取りだせるようにしましょうか
+      let current = 0;
+      let that = this;
+      while (current < this.data.length) {
+        yield that.data[current++];
+      }
+    };
+  }
+}
+</script>

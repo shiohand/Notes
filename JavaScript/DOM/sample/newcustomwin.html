@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body onload="init()">
+  <form name="form1">
+    <p>
+      <input type="button" value="btnOpen" onclick="openWindow()">
+      <input type="button" value="btnClose" onclick="closeWindow()">
+    </p>
+    <p>URL：<input type="text" name="txtUrl"></p>
+    <p>幅：<input type="text" name="txtWidth"></p>
+    <p>高さ：<input type="text" name="txtHeight"></p>
+  </form>
+</body>
+</html>
+  <script>
+    function init() {
+      document.form1.txtUrl.value = '#';
+      document.form1.txtWidth.value = '600';
+      document.form1.txtHeight.value = '480';
+      document.form1.btnClose.disabled = true;
+    }
+    function openWindow() {
+      let errMsg = errorCheck();
+      if (errMsg != '') {
+        alert(errMsg + ' が入力されていません');
+        return;
+      }
+
+      let url = document.form1.txtUrl.value;
+      let width = document.form1.txtWidth.value;
+      let height = document.form1.txtHeight.value;
+
+      if (confirm('新しいウィンドウを開いてもよろしいですか？')) {
+        mywin = window.open(url, '', 'width=' + width + ',height=' + height);
+        document.form1.btnClose.disabled = false;
+      }
+    }
+
+    function closeWindow() {
+      mywin.close();
+      document.form1.btnClose.disabled = true;
+    }
+
+    function errorCheck() {
+      let errMsg = '';
+
+      for (let i = 0; i < document.form1.length; i++) {
+        if (document.form1.elements[i].type == 'text' &  document.form1.elements[i].value == '') {
+          switch(document.form1.elements[i].name) {
+            case 'txtUrl':
+              errMsg += '[URL]';
+              break;
+            case 'txtWidth':
+              errMsg += '[幅]';
+              break;
+            case 'txtHeight':
+              errMsg += '[高さ]';
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      return errMsg;
+    }
+  </script>
+
+</html>

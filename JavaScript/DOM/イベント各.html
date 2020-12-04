@@ -1,0 +1,99 @@
+○イベントオブジェクト
+Event
+  bubbles           bool
+  canselable        bool
+  type              str  clickとかloadとか
+  defaultPrepented  bool
+  eventPhase        定数
+  target            elm  イベントの発生元
+  currentTarget     elm  イベントの持ち主
+メソッド
+  preventDefault()
+  stopPropagation()
+  soptImmediatePropagation()
+
+ErrorEvent
+ログとかとれる
+  message   内容
+  filename  発生ファイル
+  lineno    発生行
+  calno     column？
+StorageEvent
+  key           clear()のときはnull
+  newValue      clear()やキーの削除ではnull
+  oldValue      clear()やキーの追加ではnull
+  storageArea   ストレージオブジェクト
+  url           発生元ページ
+
+UIEvent
+MouseEvent
+  button/buttons     右か左かホイールかサブ１かサブ２か
+  ctrl/alt/shiftKey  bool　同時押しされていたか
+  offsetX/Y          target基準
+  pageX/Y            ページ基準
+  clientX/Y          ウィンドウ基準
+  x/y  clientX/Yの別名 実験段階
+  screenX/Y          スクリーン基準
+  movementX/Y        前回のmousemoveからの移動距離(スクリーン基準)
+DragEvent MouseEventを継承
+  dataTransfer       DataTransfer オブジェクト ってなに
+WheelEvent MouseEventを継承
+  deltaX/Y/Z         スクロール量(ｄｏｕｂｌｅ)
+
+KeyboardEvent
+  key                文字か定義済みキー値(不明ならun)
+  ctrl/alt/shiftKey  bool
+InputEvent
+  data               挿入された文字か空文字
+FocusEvent
+
+○イベントの種類
+共通
+  View       scroll, resize, fullscreenchange
+  Clipboard  copy, cut, paste
+Mouseイベント
+  click, dblclick, contextmenu
+  mousedown/up/move
+  mouseenter/leave  想像通りの方
+  mouseover/out     子要素が挟まると外れる
+  select            input-text, textareaのみ
+Dragイベント
+  drag, drop
+  dragstart/end
+  dragenter/over/leave
+他
+Progress(進捗のやつ), ポインター, タッチ
+
+Element
+  -         error                     個々の要素
+  Focus     blur, focus, focusin/out  後者はパブリングあり
+  Mouse     -
+  Wheel     wheel
+  Keyboard  keydown/press/up
+他、タッチイベントなど
+
+HTMLElement
+  Input      input  input, select, textareaのvalue追跡的な
+  Animation  animationstart/end/iteration  CSSアニメーションイベント
+HTMLFormElement
+  Form       reset, submit
+
+Windowイベント　Window#Events
+  -          DOMContentLoaded    文書の読み込み完了時
+  Resources  load, error, abort  全て完了, 失敗, 中止
+  Strage     storage             ストレージ領域の更新
+  Focus      blur, focus         (パブリングなし)
+Documentイベント　
+  -          DOMContentLoaded
+  -          visibilitychange  タブの表示切り替え
+  Wheel      wheel
+  Drag       -
+  Keyboard   keydown/press/up
+
+○イベントの集まりと発生順
+ボタンの押下
+  mousedown focus               mouseup click
+スライダバーの操作
+  mousedown change change focus mouseup click
+pクリック
+  mousedown                     mouseup click

@@ -1,0 +1,57 @@
+/* 書式指定子 */
+// formatなどで使います
+
+%[index$][flag][align][.prec]conversion
+
+index$             args[index]を指定
+  flag             出力形式
+    align          最小文字数
+      prec         桁数
+
+/* conversion 型 */
+
+s/S  文字列
+c/C  Unicode文字
+d    10進整数
+o    8進整数
+x/X  16進整数
+e/E  浮動小数点数 大文字小文字は表示文字列に反映される
+f    小数点数
+b/B  ブール値
+h/H  ハッシュコード(16進数に変換)
+t/T  日付時刻変換文字の接頭辞
+%    %リテラル
+n    改行(行区切り文字 プラットフォーム固有だとかなんとか)
+
+/* index$ */
+String.format(
+  "%1$s：第二引数\n" + "%3$d：引数を飛ばすこともできる\n" + "%1$s：繰り返し使える",
+  "第二引数 args[1]", "使わないこともできる args[2]", 3
+);
+ -> 第二引数 args[1]：第二引数
+    3：引数を飛ばすこともできる
+    第二引数 args[1]：繰り返し使える
+
+/* 修飾 */
+%5  桁指定
+%.5 最大桁指定(小数の場合は小数位)
+%-5 左詰め
+%05 0埋め
+/* 接頭辞 */
+%#x 0xをつける
+%#o 0をつける
+
+/* 日付時刻 */
+tY yyyy   ty yy
+tm mm
+td dd     te d
+tH hh 24  tI hh 12
+tk h  24  tl h  12
+tP AM     tp am
+tM mm
+tS ss
+tL ms
+tD mm/dd/yyyy
+tF yyyy-mm-dd
+tT hh:mm:ss
+tr hh:mm:ss am
