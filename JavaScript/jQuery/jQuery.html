@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="jp">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <title>jquery</title>
+  <title>jQuery</title>
 </head>
 <body>
 
@@ -22,7 +22,7 @@
       // 処理;
     });
 
-    "3. 2の省略形 最もメジャー"
+    "3. 2の省略形 最もメジャーな気がする"
     $(function($) {
       // 処理;
     });
@@ -166,7 +166,7 @@
   :hidden    display:none, type="hidden" widthとheightが0 親から非表示
 
   <h3>フィルター メソッド</h3>
-  .is(slct)  一致すればtrue、でなければfalse
+  is(slct)  一致すればtrue、でなければfalse
   <script>
     // 指定した要素がcheck
     let ret1 = $("div").is(".man");
@@ -322,10 +322,237 @@
   wrap()         対象をタグでラップ
   wrapAll()      対象をまとめてラップ 対象以外は押し出される
   wrapInner()    指定要素の中身をラップ
-  unwrap()       指定要素の中身のみ残す ラップしている要素を除く
-  replaceWith()  要素を指定の要素で置き換え
-  replaceAll()   
+  unwrap()       指定要素の中身のみ残す wrapAllの逆的な
 
+  replaceWith()  要素を指定の要素で置き換え 戻り値が置き換えられた要素
+  replaceAll()   append()とappendTo()的な
+    A.replaceWith(B) と B.replaceAll(A) が同じ
+
+  <!-- 例 -->
+  操作前
+  <span>太郎</span>
+  <span>次郎</span>
+
+  <!-- 例 wrap() -->
+  <script>
+    $("span").wrap("<div></div>");
+  </script>
+  操作後
+  <div><span>太郎</span></div>
+  <div><span>次郎</span></div>
+
+  <!-- 例 wrapAll() -->
+  <script>
+    $("span").wrapAll("<div></div>");
+  </script>
+  操作後
+  <div>
+    <span>太郎</span>
+    <span>次郎</span>
+  </div>
+
+  <!-- 例 wrapAll()-2 -->
+  操作前
+  <span>太郎</span>
+  <strong>花子</strong>
+  <span>次郎</span>
+
+  <script>
+    $("span").wrapAll("<div></div>");
+  </script>
+
+  操作後 追い出される
+  <div>
+    <span>太郎</span>
+    <span>次郎</span>
+  </div>
+  <strong>花子</strong>
+
+  <!-- 例 wrapInner() -->
+  <script>
+    $("span").wrapInner("<div></div>");
+  </script>
+
+  操作後
+  <span><div>太郎</div></span>
+  <span><div>次郎</div></span>
+
+  <!-- 例 unwrap() -->
+  操作前
+  <div><span>太郎</span></div>
+  <div><span>次郎</span></div>
+  <div>
+    <span>三郎</span>
+    <span>四郎</span>
+  </div>
+
+  <script>
+    $("span").unwrap();
+  </script>
+
+  操作後
+  <span>太郎</span>
+  <span>次郎</span>
+  <span>三郎</span>
+  <span>四郎</span>
+
+  <!-- 例 replaceWith() -->
+  操作前
+  <div class="container">
+    <div class="inner first">太郎</div>
+    <div class="inner second">次郎</div>
+    <div class="inner third">三郎</div>
+  </div>
+
+  <!-- 例 replaceWith()-1 -->
+  <script>
+    $("div.second").replaceWith("<h2>花子</h2>");
+  </script>
+
+  操作後
+  <div class="container">
+    <div class="inner first">太郎</div>
+    <h2>花子</h2>
+    <div class="inner third">三郎</div>
+  </div>
+  
+  <!-- 例 replaceWith()-2 -->
+  <script>
+    $("div.third").replaceWith($(".first")); // 戻り値 $("div.third")
+  </script>
+  
+  操作後
+  <div class="container">
+    <div class="inner second">次郎</div>
+    <div class="inner first">太郎</div>
+  </div>
+
+  <!-- 例 replaceWith()-3 -->
+  <script>
+    $("div.inner").replaceWith("<h2>花子</h2>");
+  </script>
+  
+  操作後
+  <div class="container">
+    <h2>花子</h2>
+    <h2>花子</h2>
+    <h2>花子</h2>
+  </div>
+
+  <h2>削除, クローン</h2>
+  remove()  要素そのものを削除 戻り値はレシーバオブジェクト(つまり普通)
+  empty()   要素の内側を削除
+
+  clone()   コピーを作成して返す
+    参照じゃないのでこれをappendしても元のオブジェクトに影響しないということ
+    idの重複に注意
+
+  <h2>Traversing(横断) ノードウォーキング的な</h2>
+  first()
+  last()
+  eq(n)        0始まり 負の値を指定した場合は後ろから数える
+  filter(slct)    絞り込み
+  not(slct)
+  find(slct)      要素の子孫要素から探せる
+
+  prev(slct)
+  prevAll(slct)
+  next(slct)
+  nextAll(slct)
+  parent(slct)
+  parents(slct)
+  children(slct)  子すべて
+  siblings(slct)  兄弟全て
+  closet(slct)    選択した各要素のslctにマッチする最も近い先祖要素を選択(？)
+
+  end(slct)       要素の横断を一つ戻る ひとつ前の選択状態に戻る スタックのイメージ
+  addBack(slct)   要素の横断を一つ進む(？)
+
+  <h2>jQueryオブジェクト操作</h2>
+  length                    選択中の要素数
+  each(function(idx, elm))  foreach elmはthis return false;がきく
+  get(n)                    [n]と同じ
+  toArray()
+  map(function(idx, elm))   普通にmap
+  index()                   index(), index(elm), index(slct) 複数の場合は最初の要素の位置
+
+  <h2>イベント</h2>
+  on( events[, slct][, data], handler)
+  on( events-map[, slct][, data])
+
+  events      スペース区切りで複数指定可能 "mouseenter mouseleave"
+  slct        イベントの委譲を行える $("ul").on(event, "li", handler)
+  data        ハンドラを使いまわしても要素ごとに渡すデータを選択でき、処理を分岐できる
+              文字列単体で渡すときは、slctとみなされないようにslct部分にnullを渡す必要あり
+  events-map  オブジェクトとして複数のイベント+ハンドラをまとめて指定する
+
+  <script>
+    $("#click_me").on("click", function() {
+      alert("クリックされました");
+    });
+    $("ul").on("click", "li", function() {
+      alert($(this).text());
+    });
+    // HTMLにdata-nameとかつけておく方法もあり
+    $("#taro").on("click", {name: "太郎", area: "東京"}, greet);
+    $("#jiro").on("click", {name: "次郎", area: "埼玉"}, greet);
+    function greet(event) {
+      alert(event.data.area + "の" + event.data.name + "です。");
+    };
+    $("#view").on({
+      mouseenter: function() {
+        // 処理;
+      },
+      mouseleave: function() {
+        // 処理;
+      }
+    });
+  </script>
+
+  <h3>イベント委譲</h3>
+  子要素全部にイベントをつけていたら要素の増減などに対応しきれないので、親要素にイベントをつけて処理のときにどの子要素が発生源となったかを確認して実行する
+
+  <h3>イベント付与のショートカット</h3>
+  通常はon("",func)使えだが、ショートカットが用意されているものもある
+  ready()  いつも書くやつ。これについては逆にon()での指定がv3.0で廃止
+  blur change click dblclick error(v3.0で廃止)
+  focus focusin focusout keydown keypress keyup
+  load mousedown mouseenter mouseleave mousemove mouseout mouseover mouseup
+  resize scroll select submit unload(v3.0で廃止)
+
+  <h3>イベントのthisについて</h3>
+  thisはvanillaと同じなので、jQueryで使用するときは$(this)の形になることが多い
+
+  <h3>hover</h3>
+  オブジェクト.hover(func1, func2)  ホバーイベント用のjQueryオブジェクトメソッド
+  <script>
+    $("#menu").hover(function() {
+      $(this).css("color", "blue");
+    }, function() {
+      $(this).css("color", "red");
+    })
+  </script>
+
+  <h3>その他メソッド</h3>
+  one()             イベントを付与するが各要素につき一回だけでイベントリスナーが解除される
+  off()             イベントリスナーの解除(引数指定で絞り込み)
+    off(events[, slct][, handler(eventObject)])
+    off(events-map[, slct])
+  trigger()         発火 設定してある要素の全てが動作 戻り値はjQueryオブジェクト
+  triggerHandler()  発火 設定してある要素の一つ目のみ動作 戻り値はハンドラのreturn
+                    バブリングなし デフォルト動作
+
+  <h3>オリジナルの名前でイベントを設定する</h3>
+  trigger()で発火することを前提に、標準にはないイベント("myevent"など)を指定してもよい
+  それをclickイベントのハンドラ内で発火するのもよい(うざくない？いい？)
+  offやtriggerでの管理が楽になるかも
+
+  <h3>読み込みが画像まで終了してから実行</h3>
+  <script>
+    $(window).on("load", function() {
+      // 読み込み後の処理;
+    });
+  </script>
 
 </body>
 </html>
