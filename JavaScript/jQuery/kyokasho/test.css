@@ -1,0 +1,46 @@
+body {
+  width: 90%;
+  margin: 0 auto;
+}
+h1, h2, h3 {
+  margin: 0.5rem 0;
+}
+p {
+  margin: 0.5rem 0;
+  font-size: 15px;
+}
+code {
+  background-color: #eee;
+}
+pre {
+  padding: 1em;
+  background-color: #eee;
+}
+section {
+  border-top: 1px solid #555;
+  padding-bottom: 10px;
+}
+
+.text {
+  padding: 3px;
+  background-color: #cc8;
+}
+#sec1 .text.change {
+  background-color: #c8c;
+}
+
+#sec2 .text {
+  transition: 2s ease;
+}
+
+#sec3 .btn5.change {
+  font-weight: bold;
+}
+#sec3 .btn6.change {
+  padding: 2rem;
+}
+
+#sec4 .btn7 {
+  font-size: 16px;
+  padding: 1em;
+}

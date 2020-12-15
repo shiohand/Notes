@@ -1,0 +1,94 @@
+:root {
+  --main-color: #656565;
+  --sub-color: #ae5e9b;
+  font-size: 16px;
+}
+body {
+  margin: 0 auto;
+  background-color: var(--main-color);
+}
+h1, h2, h3 {
+  margin: 0.5rem 0;
+}
+p {
+  margin: 0.5rem 0;
+  font-size: 15px;
+}
+code {
+  background-color: #eee;
+}
+pre {
+  padding: 1em;
+  background-color: #eee;
+}
+section {
+  border-top: 1px solid #555;
+  padding-bottom: 10px;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+
+.main {
+  position: relative;
+}
+
+.main > aside {
+  position: fixed;
+  top: 0;
+  left: -350px;
+  width: 350px;
+  height: 100%; /* 親の高さいっぱい */
+  background-color: rgba(0,0,0,0.8);
+}
+
+.main > aside ul {
+  position: absolute;
+  top: 50px;
+  left: 114px;
+  margin: 0;
+  padding: 0;
+}
+
+.main > aside li {
+  list-style: none;
+  margin: 0 0 20px;
+}
+
+.main > aside button {
+  display: block;
+  position: absolute;
+  top: 150px;
+  left: 350px;
+  width: 52px;
+  height: 132px;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0,0,0,0.8);
+  border: none;
+}
+
+#typo {
+    margin: 0;
+    padding: 0;
+    background-color: #3498db;
+    font-weight: bold;
+    font-size: 110px;
+    color: #fff;
+    text-align: center;
+    line-height: 500px;
+    height: 500px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+#typo .inner {
+    position: relative;
+    width: 976px;
+    margin: 0 auto;
+}
