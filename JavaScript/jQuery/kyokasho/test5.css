@@ -1,0 +1,85 @@
+:root {
+  font-size: 16px;
+  --temp-color: #dddddd;
+}
+body {
+  margin: 0 auto;
+  background-color: var(--main-color);
+}
+h1, h2, h3 {
+  margin: 0.5rem 0;
+}
+ul { padding-left: 0; }
+ul li { list-style-type: none; }
+a { color: inherit; text-decoration: none; }
+p {
+  margin: 0.5rem 0;
+  font-size: 15px;
+}
+code {
+  background-color: #eee;
+}
+pre {
+  padding: 1em;
+  background-color: #eee;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.work-section .section-header > .inner {
+  position: relative;
+  margin: auto;
+  width: 960px;
+}
+.work-section .tabs-highlight {
+  position: absolute;
+  height: 100%;
+  width: 120px;
+  background-color: rgb(51, 51 ,51);
+}
+.work-section .tabs-highlight::after {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  height: 19px;
+  bottom: -19px;
+  width: 37px;
+  margin-left: -18px;
+  background: var(--temp-color);
+  content: "";
+}
+.work-section .tabs-nav li {
+  position: relative;
+  float: left;
+  border-right: 1px solid rgb(218, 218, 218);
+  box-shadow: 1px 0 rgb(255, 255, 255);
+}
+.work-section .tabs-nav a {
+  position: relative;
+  display: block;
+  padding: 0 1.36em;
+}
+.work-section .tabs-nav a:hover,
+.work-section .tabs-nav a.active {
+  background-color: rgb(51, 51, 51);
+  color: rgb(255, 255, 255);
+}
+.work-section .tabs-nav a.active::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: 19px;
+  width: 37px;
+  margin-left: -18px;
+  content: "";
+  background: var(--temp-color);
+}
+.work-section .section-body {
+  position: relative;
+  height: 400px;
+  background: var(--temp-color);
+}
