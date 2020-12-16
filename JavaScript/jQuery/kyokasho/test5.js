@@ -54,6 +54,19 @@ jQuery(function($) {
     }
     return []; // 該当なし
   }
+
+  $('.back-to-top2').on('click', function() {
+    $.smoothScroll({
+      easing: 'easeOutExpo',
+      speed: 500
+    });
+  });
+  // 任意の要素のメソッドとして設定できる
+  $('.toc a').smoothScroll({
+    afterScroll: function() {
+      location.hash = $(this).attr('href');
+    }
+  })
 });
 
 /**

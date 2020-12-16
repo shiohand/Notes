@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+body { margin: 0 auto; }
+h1, h2, h3, ul { margin: 0; }
+ul { padding-left: 0; }
+ul li { list-style-type: none; }
+a { color: inherit; text-decoration: none; }
+p {
+  margin: 0.5rem 0;
+  font-size: 15px;
+}
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.progress { /* 全体 */
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+}
+.progress-bar { /* 線 */
+  position: absolute;
+  top: 50%;
+  width: 0%;
+  border-top: 1px solid rgb(160, 160, 160);
+}
+.progress-text { /* 文字列 */
+  position: absolute;
+  top: 50%;
+  margin-top: 10px;
+  width: 100%;
+  font-family: "Menlo", "Consolas", monospace;
+  font-size: 12px;
+  text-align: center;
+}
+.progress-complete .progress-bar {
+  border-top-color: #fff;
+}
+
+.schene {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+/* 省略 */
+.image-sequence {
+  position: absolute;
+}
+.image-sequence img {
+  position: absolute;
+  display: none;
+  height: 100%;
+  width: 100%;
+}
+.immage-sequence img:first-child { /* 一枚目 */
+  display: inline;
+}
