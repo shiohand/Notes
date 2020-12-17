@@ -68,6 +68,34 @@ img { vertical-align: middle; }
   height: 100%;
   width: 100%;
   background-color: rgba(231, 31, 25, 0.8);
+  color: rgb(255, 255, 255);
+  padding: 10px;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.gallery-item .caption:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.gallery-item .caption > .inner {
+  display: inline-block;
+  vertical-align: middle;
+}
+.gallery-item .title {
+  display: block;
+  /* font-saptionize: 18px; */
+  line-height: 1.17;
+}
+.gallery-item .date {
+  display: block;
+  font-family: "Georgia", serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.75;
 }
 
 /* フィルター */

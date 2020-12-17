@@ -2,54 +2,50 @@
 
 ## ready
 
+### 1. jQuery関数を利用。万一にも衝突無し
 ```js
-"1. jQuery関数を利用。万一にも衝突無し";
-jQuery(function($) {
-  // 処理;
-});
-
-"2. documentのreadyメソッドを利用"
-$(document).ready(function($) {
-  // 処理;
-});
-
-"3. 2の省略形 最もメジャーな気がする"
-$(function($) {
-  // 処理;
-});
+jQuery(function($) {});
 ```
 
-## 基本
+### 2. documentのreadyメソッドを利用
+```js
+$(document).ready(function($) {});
+```
+
+### 3. 1の省略形 最もメジャーな気がする
+```js
+$(function($) {});
+```
+
+
+## jQueryオブジェクトの取得
+
+* $('selector')
 
 ```js
-"readyとして";
-"$(関数)";
-$(function($) {
-  // 処理;
-});
+let $変数 = $('.btn .primary');
+```
 
-"jQueryオブジェクト";
-'$("セレクタ―")';
-let $変数 = $(".btn .primary");
+* $(element)
+* $('HTML文字列')
 
-"jQueryオブジェクト";
-"$(DOM要素)";
+```js
 // this
 let $ths = $(this);
 // windowとdocumentも可能
 let $win = $(window);
 let $doc = $(document);
 // 要素を生成(後述)
-let $li = $("<li>あいてむ</li>");
+let $li = $('<li>あいてむ</li>');
 ```
 
-## 要素の生成
+## DOM要素の生成
 
-* $("HTML文字列")
+* $('HTML文字列')
 
 ```js
-$("<a></a>"); // "<a>"のみでも動くが非推奨
-$("<img>");
+$('<a></a>'); // $('<a>')のみでも動くが非推奨
+$('<img>');
 $('<li class="item">アイテム</li>');
 ```
 
@@ -57,10 +53,10 @@ $('<li class="item">アイテム</li>');
 \- オブジェクトとしてattributesを追加
 
 ```js
-$("<a></a>", {        // ここで属性(href=""など)を含めてはいけない
-  href: "abc.html",
-  target: "_blank",
-  "class": "myClass"  // 予約語のためStringで
+$('<a></a>', {        // ここで属性(href=""など)を含めてはいけない
+  href: 'abc.html',
+  target: '_blank',
+  'class': 'myClass'  // 予約語のためStringで
 });
 ```
 
@@ -69,12 +65,12 @@ $("<a></a>", {        // ここで属性(href=""など)を含めてはいけな�
 \- ただし読みにくいのでやらない
 
 ```js
-$("<div></div>", {
+$('<div></div>', {
   css: {
-    border: "5px solid gray",
-    backGroundColor: "ashgray"
+    border: '5px solid gray',
+    backGroundColor: 'ashgray'
   },
-  addClass: "my-div",
+  addClass: 'my-div',
   on: {
     click: function(event) {
       // 処理;
@@ -90,11 +86,11 @@ $("<div></div>", {
 
 ```js
 // 要素の取得とメソッド実行
-let $color_div = $("#color_div");
-$color_div.css("border", "1px solid red");
-$color_div.css("display", "block");
+let $color_div = $('#color_div');
+$color_div.css('border', '1px solid red');
+$color_div.css('display', 'block');
 // メソッドチェーン
-$("#color_div").css("border", "1px solid red").css("display", "block");
+$('#color_div').css('border', '1px solid red').css('display', 'block');
 ```
 
 複数要素を取得している場合
@@ -102,9 +98,9 @@ $("#color_div").css("border", "1px solid red").css("display", "block");
 値を取得するメソッドは一つ目の要素のものを取得
 
 ```js
-let $lis = $(".items li");
-$lis.css("color", "red"); // すべてに適用
-$lis.css("color");        // 先頭の一つの値を取得
+let $lis = $('.items li');
+$lis.css('color', 'red'); // すべてに適用
+$lis.css('color');        // 先頭の一つの値を取得
 ```
 
 cssで取得する値も計算済みの値 rgb(r, g, b) なので、条件式に使うのは注意
@@ -125,15 +121,17 @@ cssで取得する値も計算済みの値 rgb(r, g, b) なので、条件式に
 
 ### 子要素フィルター インデックス
 
-:first
-:last
-:even      偶数インデックス -> 直感的には奇数番目
-:odd       奇数インデックス -> 直感的には偶数番目
-:eq()      インデックス
-:gt()      より大きい
-:lt()      未満
-:header    headingタグ要素
-:animated  アニメーション動作中要素
+|-          |-
+|-          |-
+| :first    | 
+| :last     | 
+| :even     | 偶数インデックス -> 直感的には奇数番目
+| :odd      | 奇数インデックス -> 直感的には偶数番目
+| :eq()     | インデックス
+| :gt()     | より大きい
+| :lt()     | 未満
+| :header   | headingタグ要素
+| :animated | アニメーション動作中要素
 
 ややこしいところ
 ```
@@ -141,38 +139,44 @@ cssで取得する値も計算済みの値 rgb(r, g, b) なので、条件式に
 <ul> <li>4</li><li>5</li><li>6</li> </ul>
 <ul> <h1>7</h1><li>8</li><li>9</li> </ul>
 ```
-li                   -> 1, 2, 3, 4, 5, 6, 8, 9
-li:first             -> 1           一つ目のli
-li:first-child       -> 1, 4        子要素の一つ目であるli
-li:even              -> 1, 3, 5, 8, 9
-li:nth-child(even)   -> 2, 5, 8     子要素の(even)番目であるli
-li:nth-of-type(even) -> 2, 5, 9     子要素のliの(even)番目であるli
-li:eq(2)             -> 3
-li:gt(2)             -> 4, 5, 6, 8, 9
-li:lt(2)             -> 1, 2
+
+|-                     |-                       |-
+|-                     |-                       |-
+| li                   | 1, 2, 3, 4, 5, 6, 8, 9 |
+| li:first             | 1                      | 一つ目のli
+| li:first-child       | 1, 4                   | 子要素の一つ目であるli
+| li:even              | 1, 3, 5, 8, 9          |
+| li:nth-child(even)   | 2, 5, 8                | 子要素の(even)番目であるli
+| li:nth-of-type(even) | 2, 5, 9                | 子要素のliの(even)番目であるli
+| li:eq(2)             | 3                      |
+| li:gt(2)             | 4, 5, 6, 8, 9          |
+| li:lt(2)             | 1, 2                   |
 
 ### 子要素フィルター フォームタイプ
 
-jQuery独自？非推奨？右の書き換えが良い？
-:button    button, input[type="button"]
-:checkbox  [type="checkbox"]
-:file      [type="file"]
-:image     [type="image"]
-:input     input, textarea, select, button
-:password  [type="password"]
-:radio     [type="radio"]
-:reset     [type="reset"]
-:submit    [type="submit"]
-  buttonのsubmitを含むかはブラウザ差あり
-:text      [type="text"]
+#### jQuery独自？非推奨？右の書き換えが良い？
+|-          |-
+|-          |-
+| :button   | button, input[type="button"]
+| :checkbox | [type="checkbox"]
+| :file     | [type="file"]
+| :image    | [type="image"]
+| :input    | input, textarea, select, button
+| :password | [type="password"]
+| :radio    | [type="radio"]
+| :reset    | [type="reset"]
+| :submit   | [type="submit"] buttonのsubmitを含むかはブラウザ差あり
+| :text     | [type="text"]
 
-jQuery独自？"input"とかを省略できるってことか 非推奨じゃない？
-:checked   input:checked
-:selected  select option:selected
-:disabled  input:disabled
-:enabled   input:enabled
-:visible   visibirity:hidden, opacity:0などの透明はvisible
-:hidden    display:none, type="hidden" widthとheightが0 親から非表示
+#### jQuery独自？"input"とかを省略できるってことか 非推奨じゃない？
+|-          |-
+|-          |-
+| :checked  | input:checked
+| :selected | select option:selected
+| :disabled | input:disabled
+| :enabled  | input:enabled
+| :visible  | visibirity:hidden, opacity:0などの透明はvisible
+| :hidden   | display:none, type="hidden" widthとheightが0 親から非表示
 
 ### フィルター メソッド
 
@@ -180,8 +184,8 @@ jQuery独自？"input"とかを省略できるってことか 非推奨じゃな
 
 ```js
 // 指定した要素がcheck
-let ret1 = $("div").is(".man");
-let ret2 = $("#chk").is(":checked");
+let ret1 = $('div').is('.man');
+let ret2 = $('#chk').is(':checked');
 ```
 
 ### attribute操作
@@ -194,9 +198,9 @@ let ret2 = $("#chk").is(":checked");
   attr(attr, function(idx, attr) { /* 代入する値 */ })
 
 ```js
-$('img').attr("title", function(idx, val) {
+$('img').attr('title', function(idx, val) {
   // [(インデックス)] (現在のval) (altのval) にしたい
-  return "[" + index + "]" + val + this.alt;
+  return '[' + index + ']' + val + this.alt;
 });
 ```
 
@@ -218,9 +222,9 @@ $('img').attr("title", function(idx, val) {
   単位はpx, 戻り値は単位含む文字列
   propは文字列としてクォーテーションをつけるかキャメルケースで書くか
 * 代入
-  相対値("+=15"など)あり
+  相対値('+=15'など)あり
 * css(prop)              取得
-* css(prop, val)         "+=15"などで値の変更可能(px？)
+* css(prop, val)         '+=15'などで値の変更可能(px？)
 * css({prop: val, prop: val...})
 
 ### width, height操作
@@ -228,7 +232,7 @@ $('img').attr("title", function(idx, val) {
 取得
   戻り値は整数値と一部小数値, box-sizingの影響なし
 代入
-  単位付きの文字列("50%"など)可能, box-sizingの影響あり
+  単位付きの文字列('50%'など)可能, box-sizingの影響あり
 
 * width()
 * height()
@@ -252,8 +256,8 @@ $('img').attr("title", function(idx, val) {
 * position()    位置的な親要素(position: static以外である親)に対する位置
 
 ```js
-let off = $("#main").offset(); // { top=50, left=20 }
-$("#main").offset().top; // 50
+let off = $('#main').offset(); // { top=50, left=20 }
+$('#main').offset().top; // 50
 off.left; // 20
 ```
 
@@ -277,8 +281,8 @@ html()とtext()の取得
 ```
 
 ```js
-  let ret1 = $("li").html(); // <span>太郎</span>
-  let ret2 = $("li").text(); // 太郎次郎花子
+  let ret1 = $('li').html(); // <span>太郎</span>
+  let ret2 = $('li').text(); // 太郎次郎花子
 ```
 
 ### form, val()
@@ -289,11 +293,11 @@ selectの例
 
 ```js
 // name=rdoのラジオボタンでチェックされているもの
-let checked = $("input[type=radio][name=rdo]:checked").val();
+let checked = $('input[type=radio][name=rdo]:checked').val();
 // セレクトボックスは親のselectのval()でよい
-let selected = $("select").val();
+let selected = $('select').val();
 // チェックボックスはcheckedが複数とれると、そのままval()しても一つ目しか取得できない
-let checkeds = $("input[type=checkbox][name=chk]:checked").map(function() {
+let checkeds = $('input[type=checkbox][name=chk]:checked').map(function() {
   return $(this).val();
 }).toArray;
 ```
@@ -334,7 +338,7 @@ let checkeds = $("input[type=checkbox][name=chk]:checked").map(function() {
 ```
 
 ```js
-  $("ul").append($("#taro"));
+  $('ul').append($('#taro'));
 ```
 
 操作後
@@ -371,7 +375,7 @@ let checkeds = $("input[type=checkbox][name=chk]:checked").map(function() {
 * wrap()
 
 ```js
-$("span").wrap("<div></div>");
+$('span').wrap('<div></div>');
 ```
 
 ```html
@@ -382,7 +386,7 @@ $("span").wrap("<div></div>");
 * wrapAll()
 
 ```js
-$("span").wrapAll("<div></div>");
+$('span').wrapAll('<div></div>');
 ```
 
 ```html
@@ -402,7 +406,7 @@ $("span").wrapAll("<div></div>");
 ```
 
 ```js
-$("span").wrapAll("<div></div>");
+$('span').wrapAll('<div></div>');
 ```
 
 ```html
@@ -416,7 +420,7 @@ $("span").wrapAll("<div></div>");
 * wrapInner()
 
 ```js
-  $("span").wrapInner("<div></div>");
+  $('span').wrapInner('<div></div>');
 ```
 
 ```html
@@ -437,7 +441,7 @@ $("span").wrapAll("<div></div>");
 ```
 
 ```js
-$("span").unwrap();
+$('span').unwrap();
 ```
 
 ```html
@@ -460,7 +464,7 @@ $("span").unwrap();
 置換
 
 ```js
-$("div.second").replaceWith("<h2>花子</h2>");
+$('div.second').replaceWith('<h2>花子</h2>');
 ```
 
 ```html
@@ -474,7 +478,7 @@ $("div.second").replaceWith("<h2>花子</h2>");
 移動と置換
 
 ```js
-$("div.third").replaceWith($(".first")); // 戻り値 $("div.third")
+$('div.third').replaceWith($('.first')); // 戻り値 $("div.third")
 ```
 
 ```html
@@ -487,7 +491,7 @@ $("div.third").replaceWith($(".first")); // 戻り値 $("div.third")
 マッチした全ての要素に反映される
 
 ```js
-$("div.inner").replaceWith("<h2>花子</h2>");
+$('div.inner').replaceWith('<h2>花子</h2>');
 ```
 
 ```html
@@ -558,25 +562,25 @@ $("div.inner").replaceWith("<h2>花子</h2>");
 
 | 引数        |-
 |-           |-
-| events     | スペース区切りで複数指定可能 "mouseenter mouseleave"
-| slct       | イベントの委譲を行える $("ul").on(event, "li", handler)
+| events     | スペース区切りで複数指定可能 'mouseenter mouseleave'
+| slct       | イベントの委譲を行える $('ul').on(event, 'li', handler)
 | data       | ハンドラを使いまわしても要素ごとに渡すデータを選択でき、処理を分岐できる<br>文字列単体で渡すときは、slctとみなされないようにslct部分にnullを渡す必要あり
 | events-map | オブジェクトとして複数のイベント+ハンドラをまとめて指定する
 
 ```js
-$("#click_me").on("click", function() {
-  alert("クリックされました");
+$('#click_me').on('click', function() {
+  alert('クリックされました');
 });
-$("ul").on("click", "li", function() {
+$('ul').on('click', 'li', function() {
   alert($(this).text());
 });
 // HTMLにdata-nameとかつけておく方法もあり
-$("#taro").on("click", {name: "太郎", area: "東京"}, greet);
-$("#jiro").on("click", {name: "次郎", area: "埼玉"}, greet);
+$('#taro').on('click', {name: '太郎', area: '東京'}, greet);
+$('#jiro').on('click', {name: '次郎', area: '埼玉'}, greet);
 function greet(event) {
-  alert(event.data.area + "の" + event.data.name + "です。");
+  alert(event.data.area + 'の' + event.data.name + 'です。');
 };
-$("#view").on({
+$('#view').on({
   mouseenter: function() {
     // 処理;
   },
@@ -592,7 +596,7 @@ $("#view").on({
 
 ### イベント付与のショートカット
 
-通常はon("",func)使えだが、ショートカットが用意されているものもある
+通常はon('',func)使えだが、ショートカットが用意されているものもある
 ready()  いつも書くやつ。これについては逆にon()での指定がv3.0で廃止
 
 blur change click dblclick error(v3.0で廃止)
@@ -609,10 +613,10 @@ thisはvanillaと同じなので、jQueryで使用するときは$(this)の形�
 オブジェクト.hover(func1, func2)  ホバーイベント用のjQueryオブジェクトメソッド
 
 ```js
-$("#menu").hover(function() {
-  $(this).css("color", "blue");
+$('#menu').hover(function() {
+  $(this).css('color', 'blue');
 }, function() {
-  $(this).css("color", "red");
+  $(this).css('color', 'red');
 })
 ```
 
@@ -632,14 +636,14 @@ $("#menu").hover(function() {
 
 ### オリジナルの名前でイベントを設定する
 
-trigger()で発火することを前提に、標準にはないイベント("myevent"など)を指定してもよい
+trigger()で発火することを前提に、標準にはないイベント('myevent'など)を指定してもよい
 それをclickイベントのハンドラ内で発火するのもよい(うざくない？いい？)
 offやtriggerでの管理が楽になるかも
 
 ### 読み込みが画像まで終了してから実行
 
 ```js
-$(window).on("load", function() {
+$(window).on('load', function() {
   // 読み込み後の処理;
 });
 ```
