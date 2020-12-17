@@ -46,6 +46,67 @@ jQuery(function($) {
       $loadMoreButton.on('click', addItems);
       // フィルターの変更 (各ボタンに以上)
       $filter.on('change', 'input[type="radio"]', filterItems);
+      // ホバーエフェクト
+      $container.on('mouseenter mouseleave', '.gallery-item a', hoverDirection);
+    }
+
+    function hoverDirection(event) {
+      const $overlay = $(this).find('.caption');
+      const side = getMouseDirection(event);
+      // 実行用
+      let animateTo;
+      // スライドインの始点
+      let positionIn = {
+        top: '0%',
+        left: '0%'
+      };
+      // スライドアウトの終点
+      const positionOut = (function() {
+        switch (side) {
+          // case0から top, right, bottom, left
+          case 0: return { top: '-100%', left: '0%' };
+                  break;
+          case 1: return { top: '0%', left: '100%' };
+                  break;
+          case 2: return { top: '100%', left: '0%' };
+                  break;
+          default: return { top: '0%', left: '-100%' };
+                   break;
+        }
+      })();
+      if (event.type === 'mouseenter') {
+        // mouseenter
+        animateTo = positionIn;
+        $overlay.css(positionOut); // 進行方向へ
+      } else {
+        // それ以外(mouseout)
+        animateTo = positionOut;
+      }
+      $loadMoreButton.stop().animate(animateTo, 250, 'easeOutExpo');
+    }
+
+    // マウスはどの上下左右のどの辺で移動したか
+    function getMouseDirection(event) {
+      // ターゲット
+      const $elm = $(event.currentTarget);
+
+      // 要素のoffset取得
+      const offset = $elm.offset();
+      // 各部
+      const w = $elm.outerWidth;
+      const h = $elm.outerHeight;
+      // 要素に対するポインタの位置の関係？
+      const x = (event.pageX - offset.left - w / 2) * ((w > h) ? h / w : 1);
+      const y = (event.pageX - offset.top - h / 2) * ((h > w) ? w / h : 1);
+
+      // 0: top, 1: right, 2: bottom, 3: left
+      const direction = 
+        Math.round((((Math.atan2(y, x) * (180 / Math.PI)) + 180
+            ) / 90
+          ) + 3
+        ) % 4;
+
+      return direction;
     }
 
     // 要素の追加、表示
@@ -85,6 +146,15 @@ jQuery(function($) {
         // フィルタリング時は再配置 filterがfalse -> 引数が渡されていないのでスルー
         if (filter) {
           $container.masonry();
+        }
+      });
+
+      // colorboxの設定
+      $container.find('a').colorbox({
+        maxWidth: '970px',
+        maxHeight: '95%',
+        title: function() {
+          return $(this).find('.inner').html();
         }
       });
 

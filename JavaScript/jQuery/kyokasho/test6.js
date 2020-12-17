@@ -66,13 +66,15 @@ jQuery(function($) {
     const $images = $container.find('img');
     const frameLength = $images.length; // 画像の総数
     let currentFrame = 0; // 現在のインデックス
-    let countor = 0; // アニメーションの速度
-    let valocity = 0; // アニメーションのタイマー
+    let counter = 0; // アニメーションの速度
+    let velocity = 0; // アニメーションのタイマー
     let timer = null;
     const imageAspectRatio = 864 / 486; // アス比 設定？
 
     $container.on('mousewheel', function(event, delta) {
-      if (delata < 0) {
+      // プラグインにより第二引数で情報を受け取れる
+      // ホイールの方向によって分岐
+      if (delta < 0) {
         velocity += 1.5;
       } else if (delta > 0) {
         velocity -= 1.5;
@@ -95,8 +97,53 @@ jQuery(function($) {
     function animateSequence() {
       // 次の画像
       const nextFrame;
-      // 後ほど早くなる 0.00001くらいになったら停止
+
+      // 後ほど早くなる
       velocity *= 0.9;
+
+      // 0.00001くらいになったら停止
+      // カウンター速度加算、画像数の範囲内で
+      if (-0.00001 < velocity && velocity < 0.00001) {
+        stopAnimation();
+      } else {
+        counter = (counter + velocity) % frameLength;
+      }
+
+      // カウンターの数値を整数化 該当のフレーム表示
+      nextFrame = Math.floor(counter);
+      if (currentFrame !== nextFrame) {
+        $images.eq(nextFrame).show(); // 次、表示
+        $images.eq(currentFrame).hide(); // 現、非表示
+        currentFrame = nextFrame;
+      }
     }
+
+    // コンテナリサイズ
+    $(window).on('resize', function() {
+      const $window = $(this);
+      const windowWidth = $window.width();
+      const windowHeight = $window.height();
+
+      // 画像とウィンドウのアス比比較ののち、サイズと位置調整
+      // 画像がウィンドウより横長 or 縦長
+      if (imageAspectRatio > (windowWidth / windowHeight)) {
+        $container.css({
+          width: windowHeight + imageAspectRatio,
+          height: '100%',
+          top: 0,
+          left: (windowWidth - (windowHeight * imageAspectRatio)) / 2
+        });
+      } else {
+        $container.css({
+          width: '100%',
+          height: windowWidth + imageAspectRatio,
+          top: (windowHeight - (windowWidth * imageAspectRatio)) / 2,
+          left: 0
+        });
+      }
+    });
+
+    // 初回リサイズ
+    $(window).trigger('resize');
   }
 });
