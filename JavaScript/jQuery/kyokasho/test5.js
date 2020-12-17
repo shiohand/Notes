@@ -36,15 +36,15 @@ jQuery(function($) {
   // scrollableElement()
   // 別に覚えなくてもぐぐればでてくるよ
   function scrollableElement(...elms) {
-    for(elm of elms) {
-      $elm = $(elm);
+    for(const elm of elms) {
+      const $elm = $(elm);
       if ($elm.scrollTop() > 0) {
         // 既に稼働中(ある) 返す
         return elm;
       } else {
         // 0なのかないのか
         $elm.scrollTop(1); // 1にしてみる
-        const scrollable = $el.scrollTop() > 0; // どうだ？
+        const scrollable = $elm.scrollTop() > 0; // どうだ？
         $elm.scrollTop(0); // ちゃんと戻しとく
         if (scrollable) {
           // trueだ 1になっていた 返す

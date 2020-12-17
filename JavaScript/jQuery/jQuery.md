@@ -544,7 +544,7 @@ $("div.inner").replaceWith("<h2>花子</h2>");
 * each(function(idx, elm))
 \- foreach elmはthis return false;がきく
 * get(n)
-\- [n]と同じ
+\- jQueryオブジェクトではなくElementを取り出す
 * toArray()
 * map(function(idx, elm))
 \- 普通にmap
