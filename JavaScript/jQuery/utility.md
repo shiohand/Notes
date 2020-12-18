@@ -30,7 +30,7 @@ filter()的なこと
 
 * merge(arr1, arr2)
 \- arr1にarr2を付け足す
-\- 第一引数の配列が書き変わるので注意
+\- 第一引数の配列が書き変わるので注意 結合するのは二つまで
 
 ### extend()
 
@@ -43,6 +43,8 @@ assign()的なこと
 \- trueでディープコピー
   * target
 \- デフォルトはjQueryなので注意。ユーティリティ関数の追加などに使える。しかしその場合も省略ではなく指定して行うべきだと思う私は
+* jQuery.fn.extend()
+\- プロトタイプにマージして新規
 
 ```js
 function example(options) {
@@ -96,3 +98,29 @@ let merged = $.extend(true, {}, chara1, chara2);
 * parseJSON()
 \- 廃止予定
 \- 素のJSON.parse()を使う
+
+
+## 未整理
+| removeData()       | 
+| data()             | 関連付けた値の取得、保存
+| queue()            | 
+| dequeue()          | 
+| noop()             | 空関数
+| now()              | 現在時刻の数値
+| support            | 
+| trim()             | 
+| type()             | スクリプトの型を判定？
+| unique()           | 
+| proxy()            | 
+| inArray()          | 値を検索してインデックスを返す なければ-1
+
+| contains(elm)      | 子孫要素かどうか
+| isEmptyObject()    | 
+| isFunction()       | 
+| isNumeric()        | 
+| isPlainObject()    | プレーンなオブジェクトかどうか
+| isQindow()         | 
+| isXMLDoc()         | 
+| parseHTML()        | ＤＯＭノードの配列にパース
+| parseXML()         | 
+| globalEval()       | グローバルで実行

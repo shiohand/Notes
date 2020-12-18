@@ -461,7 +461,7 @@ $('span').unwrap();
 </div>
 ```
 
-置換
+### 置換
 
 ```js
 $('div.second').replaceWith('<h2>花子</h2>');
@@ -475,7 +475,7 @@ $('div.second').replaceWith('<h2>花子</h2>');
 </div>
 ```
 
-移動と置換
+### 移動と置換
 
 ```js
 $('div.third').replaceWith($('.first')); // 戻り値 $("div.third")
@@ -488,7 +488,7 @@ $('div.third').replaceWith($('.first')); // 戻り値 $("div.third")
 </div>
 ```
 
-マッチした全ての要素に反映される
+### マッチした全ての要素に反映される
 
 ```js
 $('div.inner').replaceWith('<h2>花子</h2>');
@@ -522,6 +522,7 @@ $('div.inner').replaceWith('<h2>花子</h2>');
 * filter(slct)
 \- 絞り込み
 * not(slct)
+* slice()
 * find(slct)
 \- 要素の子孫要素から探せる
 * prev(slct)
@@ -550,10 +551,41 @@ $('div.inner').replaceWith('<h2>花子</h2>');
 * get(n)
 \- jQueryオブジェクトではなくElementを取り出す
 * toArray()
+\- jQueryオブジェクトからでもElementを取り出す
 * map(function(idx, elm))
 \- 普通にmap
 * index()
+* not()
 \- index(), index(elm), index(slct) 複数の場合は最初の要素の位置
+
+## エフェクト
+
+### シンプル
+
+* hide()
+* show()
+* toggle()
+* fadeIn()
+* fadeOut()
+* fadeTo()
+* fadeToggle()
+* slideDown()
+* slideUp()
+* slideToggle()
+
+### カスタム
+
+* animate()
+* delay()
+* finish()
+* stop()
+* queue()
+* dequeue()
+* clearQueue()
+* jQuery.fx.interval
+\- アニメーションの発火するレート？
+* jQuery.fx.off
+\- すべてのアニメーションを無効化
 
 ## イベント
 
