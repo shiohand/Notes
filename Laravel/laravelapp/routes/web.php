@@ -32,3 +32,5 @@ Route::get('/hello/{id}/{pass}', function($userId, $password) {
 Route::get('/hello2/{param?}', function($param = 'default') {
     return "{$param}";
 });
+
+Route::get('hello3', 'HelloController');
