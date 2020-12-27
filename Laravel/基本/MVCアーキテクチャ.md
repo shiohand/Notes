@@ -22,3 +22,22 @@
       - テンプレート
     - Model
       - データベース
+
+
+## サービスインジェクション
+
+### Q.
+なぜ引数を追加したら自動で取得してくれる？
+```php
+/* コントローラのアクションでRequestとResponseが湧いてくる例 */
+public function index(Request $request, Response $response) {}
+```
+
+### A.
+Laravelの機能が入ったプログラムであるサービスが
+いっぱいつまったサービスコンテナが
+自動で対応するクラスのインスタンスを
+引数に渡してくれるから
+
+-> サービスインジェクション
+インジェクション……？　Dependency Injection！　そゆことー。

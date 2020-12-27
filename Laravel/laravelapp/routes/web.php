@@ -34,3 +34,7 @@ Route::get('/hello2/{param?}', function($param = 'default') {
 });
 
 Route::get('hello3', 'HelloController');
+
+Route::get('hello4', function() {
+    return view('hello.index');
+});
