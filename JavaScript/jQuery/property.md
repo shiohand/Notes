@@ -26,7 +26,7 @@
 
 ### checked,disabledなど
 
-<script>
+```js
 $('#chk').prop('checked', true);
 $('#btn').prop('disabled', false);
 
@@ -34,7 +34,7 @@ $('#chk').prop('checked');  // true
 $('#chk').is('checked');    // true
 $('#btn').prop('disabled'); // false
 $('#btn').is('disabled');   // false
-</script>
+```
 
 #### checked他の属性とプロパティ
 
@@ -62,11 +62,14 @@ DOM要素に独自のデータを関連付けて管理
 
 ### data()
 
-data(key)         取得 prop()と同じく attr()を使う
-data()            キーバリューのオブジェクトで全て取得
-
-data(key, value)  設定
-data(obj)         キーバリューのオブジェクトで複数指定
+* data(key)
+\- 取得 prop()と同じく attr()を使う
+* data()            
+\- キーバリューのオブジェクトで全て取得
+* data(key, value)
+\- 設定
+* data(obj)
+\- キーバリューのオブジェクトで複数指定
 
 ### removeData()
 
@@ -75,7 +78,7 @@ removeData([list])  配列かスペース区切りの複数指定で削除
 
 ### sample
 
-<script>
+```js
 let name;
 $('.show').attr('data-name', 'tanaka');
 $(".show").data('name'); // 初取得なのでカスタム属性から'tanaka'
@@ -84,4 +87,4 @@ $(".show").data('name'); // 取得済みなので'tanaka'
 $('.show').removeAttr('data-name');
 $(".show").data('name'); // 取得済みなので'tanaka'
 $('.show').attr('data-name'); // undefined
-</script>
+```
