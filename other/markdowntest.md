@@ -1,5 +1,9 @@
 # Markdownまとめ
 
+## 拡張
+VisualStudioCodeでMarkdownを書く際に入れておきたい便利な拡張機能5選
+https://qiita.com/sola-msr/items/cfe448db958da3d08863
+
 ## heading
 
 ```
@@ -33,27 +37,27 @@
 [a](URL)
 ```
 
-*em*  
-**strong**  
-***em+strong***  
-~sub~  
-~~s~~  
+*em*
+**strong**
+***em+strong***
+~sub~
+~~s~~
 [a](URL)
 
 ## table
 
-thead tbody th出ます 
+thead tbody th出ます
 
 ```
-|1-1|1-2|1-3|
-|:-:|-:|:-|
-|apple|bread|chocorate|
-|apple-pie|bread-chrumb|chocorate-cake|
+|    1-1    |          1-2 | 1-3            |
+| :-------: | -----------: | :------------- |
+|   apple   |        bread | chocorate      |
+| apple-pie | bread-chrumb | chocorate-cake |
 ```
-|1-1|1-2|1-3|
-|:-:|-:|:-|
-|apple|bread|chocorate|
-|apple-pie|bread-chrumb|chocorate-cake|
+|    1-1    |          1-2 | 1-3            |
+| :-------: | -----------: | :------------- |
+|   apple   |        bread | chocorate      |
+| apple-pie | bread-chrumb | chocorate-cake |
 
 ## checkbox?
 * [ ] Item1
@@ -92,8 +96,8 @@ thead tbody th出ます
 ## pre複数行
 
 ```
-｀｀｀言語  
-バックティックは半角  
+｀｀｀言語
+バックティックは半角
 ｀｀｀
 ```
 
