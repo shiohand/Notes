@@ -146,16 +146,16 @@ if ($_POST['myname'] == 'yamada' && $_POST['mypass'] == 'abcde') {
 * beforeSend(jqXHR, settings)
 カスタムヘッダーや通信前の前処理 return false;で通信のキャンセル
   * jqXHR
-\- \- jQuery用の拡張XMLHttpRequest
+  \- jQuery用の拡張XMLHttpRequest
   * settings
-\- \- 普通の
+  \- 普通の
 
 ### success()
 * success(data, textStatus, jqXHR)
   * data  
-\- \- 受信したデータ(dataTypeの指定による)
+    \- 受信したデータ(dataTypeの指定による)
   * textStatus
-\- \- jQuery用のステータスコード(だいたい'success')
+  \- jQuery用のステータスコード(だいたい'success')
   * jqXHR
 
 ### error()
@@ -163,15 +163,15 @@ scriptは内容に構文エラーがあっても無視されるよ
 * error(jqXHR, textStatus, errorThrown)
   * jqXHR
   * textStatus
-\- \- jQuery用のステータスコード('timeout', 'error', 'abort', 'parsererror(スペル注意)')
+  \- jQuery用のステータスコード('timeout', 'error', 'abort', 'parsererror(スペル注意)')
   * error
-\- \- 投げられたエラー
+  \- 投げられたエラー
 
 ### complete()
 * complete(jqXHR, textStatus) // 引数確認する
   * jqXHR
   * textStatus
-\- \- jQuery用のステータスコード('success', 'notmodified', 'timeout', 'error', 'abort', 'parsererror(スペル注意)')
+  \- jQuery用のステータスコード('success', 'notmodified', 'timeout', 'error', 'abort', 'parsererror(スペル注意)')
 
 ## get(), post()
 type(またはmethod)にgetやpostを指定した状態
@@ -188,16 +188,16 @@ $.get('test.html', function(data) {
 ## load()
 要素内に取得したコンテンツをHTMLとして入れ込む。置換する。
 
-load(url[, data][, complete(responseText, textStatus, XMLHttpRequest)])
+* load(url[, data][, complete(responseText, textStatus, XMLHttpRequest)])
   * url
-\- \- 取得したいURL
-\- \- 取得したい範囲を指定する場合は、"URL セレクタ"の形式で指定
+  \- 取得したいURL
+  \- 取得したい範囲を指定する場合は、"URL セレクタ"の形式で指定
   * data
-\- \- 送信するデータの指定
-\- \- クエリストリング形式の文字列(GETになる)、または通常のオブジェクト(POSTになる)
+  \- 送信するデータの指定
+  \- クエリストリング形式の文字列(GETになる)、または通常のオブジェクト(POSTになる)
   * complete
-\- \- マッチした要素が置換されるときに一つずつ呼び出される
-\- \- 関数内ではthisで各要素を使える
+  \- マッチした要素が置換されるときに一つずつ呼び出される
+  \- 関数内ではthisで各要素を使える
 
 ```js
 // #result <- test.html
@@ -206,15 +206,16 @@ $('#result').load('test.html');
 $('#result').load('test.html #container');
 ```
 
-取得したコンテンツにスクリプトを含む場合
+### 取得したコンテンツにスクリプトを含む場合
 \- セレクターを使用していない(コンテンツのすべてを取り込み)場合は実行される
 \- セレクターを使用した場合は実行されない
-取得先のドキュメントとの同一性
+### 取得先のドキュメントとの同一性
 \- jQueryが解析する際に不要な要素を除去する場合があるため、同一とは限らない
 ver3.0より前はイベントにもload()があったが別物
 
 ## getJSON(), getScript()
 dataTypeまで指定した状態のget()
+
 * getJSON(url[, data][success(data, textStatus, jqXHR)])
 
 ```js
@@ -223,8 +224,9 @@ $.getJSON('test.html', function(data) {
 });
 ```
 
-動的にスクリプトを取得して実行する(グローバル領域で)
+
 * getScript(url[success(data, textStatus, jqXHR)])
+\- 動的にスクリプトを取得して実行する(グローバル領域で)
 \- 当然ドメイン縛りがない
 
 ```js
@@ -237,10 +239,10 @@ AJAXの機能というわけじゃないが合わせて使うとうれしい
 ### serialize()
 フォーム要素からクエリ文字列を返す
 
-URLエンコードも自動で行われる
-"successful controls"(checked="false"やdisabledを除く)のみを対象
-ファイル選択ボックスは対象外
-name属性を使うので設定忘れず
+* URLエンコードも自動で行われる
+* "successful controls"(checked="false"やdisabledを除く)のみを対象
+* ファイル選択ボックスは対象外
+* name属性を使うので設定忘れず
 
 ```html
 <form id="seri_form">
@@ -273,8 +275,8 @@ $("#seri_btn").on("click", function(event) {
 ### serializeArray()
 フォーム要素からオブジェクトの配列を返す オブジェクトの形式が独特
 
-URLエンコードは自動じゃないけど、data引数に渡すならそっちでもエンコするので不要
-オブジェクトは{name:キー, value:値}となる {キー:値}ではない
+* URLエンコードは自動じゃないけど、data引数に渡すならそっちでもエンコするので不要
+* オブジェクトは{name:キー, value:値}となる {キー:値}ではない
 \- チェックボックスなどでは一つのnameに対して複数の値がcheckedになるため
 
 ```js
@@ -375,11 +377,11 @@ $.ajaxSetup({
 ### グローバルイベント
 * グローバルイベント(普通のイベント $(document)につける)
   * イベントタイプ
-\- \- ajaxSend, ajaxSuccess, ajaxError, ajaxComplete,
-\- \- ajaxStart, ajaxStop
+  \- ajaxSend, ajaxSuccess, ajaxError, ajaxComplete,
+  \- ajaxStart, ajaxStop
   * ショートカット用メソッド
-\- \- ajaxSend(), ajaxSuccess(), ajaxError(), ajaxComplete(),
-\- \- ajaxStart(), ajaxStop()
+  \- ajaxSend(), ajaxSuccess(), ajaxError(), ajaxComplete(),
+  \- ajaxStart(), ajaxStop()
 
 #### イベントのタイミングの例
 ajaxStart       // 一連の通信
@@ -390,16 +392,14 @@ ajaxStart       // 一連の通信
 ajaxStop        // 一連の通信
 
 #### グローバルイベントでコールバックが受け取る引数
-"ajaxSend"
-"ajaxSuccess"
-"ajaxComplete"
+* "ajaxSend"
+* "ajaxSuccess"
+* "ajaxComplete"
 \- (eventObj, jqXHR, 個々のajax()とかで指定したoptions)
-
-"ajaxError"
+* "ajaxError"
 \- (eventObj, jqXHR, 個々のajax()とかで指定したoptions, Errorオブジェクト)
-
-"ajaxStart"
-"ajaxStop"
+* "ajaxStart"
+* "ajaxStop"
 \- () 引数なし
 
 #### ローディングアイコンの処理

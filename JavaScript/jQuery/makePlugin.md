@@ -13,8 +13,9 @@ $fn.makeBig = function() {
   this.height('+=50px');
   return this; // ちゃんとreturnしたあとのこと(メソッドチェーン)も考えて
 };
-
-// メソッドチェーンで短く書く
+```
+メソッドチェーンで短く書く
+```js
 $fn.makeBig = function() {
   return this.width('+=50px').height('+=50px'); でもよし
 };
@@ -104,9 +105,9 @@ $.extend({
 \- 重複しない命名、検索するなどして重複のチェック
 * $の衝突回避に気を使う (function($) {})(jQuery) を使う
 \- 他のプログラムとファイルをまとめられてミニマイズされる対策
-\- \- ;(function($) {})(jQuery)
+\- `(function($) {})(jQuery)`
 \- 汚染回避、ミニマイズ用にグローバル変数をローカル変数に
-\- \- ;(function($, window, document) {})(jQuery)
+\- `(function($, window, document) {})(jQuery)`
 * グローバルの名前空間を汚染しない
 * 特に返り値がないときはjQueryオブジェクト(メソッドチェーン)
 * each()などで複数要素に対応させる

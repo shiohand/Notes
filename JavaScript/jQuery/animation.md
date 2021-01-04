@@ -9,8 +9,8 @@
 * show([duration][, easing][, callback])
 \- display: noneを解除
 * toggle([duration][, easing][, callback])
-toggle(showOrHide)
 \- 非表示ならshow()、表示ならhide()
+* toggle(showOrHide)
 \- showOrHideは trueならshow()、falseならhide()にできる
 
 コールバックはアニメーション完了後
@@ -39,26 +39,25 @@ $('<div>ブロック</div>').hide().addClass('float-block').appendTo("body").fad
 ### animate()
 
 * animate(properties[, duration][, easing][, complete])
-animate(properties, options)
+* animate(properties, options)
 
   * properties
-\- 変化後のCSSをキーバリューのオブジェクトで // {width: '100px', opacity: '0.5'}
-\- 長さの単位を省略するとpx
-\- 数値は相対値が可能 // '+=15'
-\- 値に 'hide', 'show', 'toggle' を利用可
-\- colorなどの数値で設定しないプロパティは指定不可
-
+    * 変化後のCSSをキーバリューのオブジェクトで // {width: '100px', opacity: '0.5'}
+    * 長さの単位を省略するとpx
+    * 数値は相対値が可能 // '+=15'
+    * 値に 'hide', 'show', 'toggle' を利用可
+    * colorなどの数値で設定しないプロパティは指定不可
   * duration
-\- 数値(ms) または 'slow'(600ms), 'fast'(200ms)
-\- デフォルトは400ms
-
+    * 数値(ms) または 'slow'(600ms), 'fast'(200ms)
+    * デフォルトは400ms
   * complete
-\- アニメーション完了後のコールバック
-
+    * アニメーション完了後のコールバック
   * options
-\- duration, easing, complete, step, queueをキーとして設定したオブジェクトを渡せる
-\- \- step -- アニメーションの各ステップで呼ばれるコールバック
-\- \- queue - boolean falseを渡すとキューを直ちに実行
+    * duration, easing, complete, step, queueをキーとして設定したオブジェクトを渡せる
+      * step
+      \- アニメーションの各ステップで呼ばれるコールバック
+      * queue
+      \- boolean falseを渡すとキューを直ちに実行
 
 ### キュー
 
@@ -136,11 +135,11 @@ function animation3() {
 
 * stop([queueName][, clearQueue[, jumpToEnd]])
   * queueName
-\- 停止対象 指定しない場合はデフォルトの'fx'
+  \- 停止対象 指定しない場合はデフォルトの'fx'
   * clearQueue
-\- boolean 残りのキューを削除するか
+  \- boolean 残りのキューを削除するか
   * jumpToEnd
-\- boolean 現在実行中のアニメーションを、そのまま停止するか、終了後の状態にするか
+  \- boolean 現在実行中のアニメーションを、そのまま停止するか、終了後の状態にするか
 
 | clear | jump  |-
 |-      |-      |-
@@ -156,8 +155,8 @@ animation()は実行される度キューに入っていくから順番に実行
 #### finish()
 
 * finish([queueName])
-実行中のanimationと以降の全てのanimationが完了した状態に飛ぶ
-queue()で追加したコールバックは無視される
+\- 実行中のanimationと以降の全てのanimationが完了した状態に飛ぶ
+\- queue()で追加したコールバックは無視される
 
 #### $.fx.off
 

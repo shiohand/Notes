@@ -101,6 +101,8 @@ let merged = $.extend(true, {}, chara1, chara2);
 
 
 ## 未整理
+|-|-
+|-|-
 | removeData()       | 
 | data()             | 関連付けた値の取得、保存
 | queue()            | 
@@ -114,6 +116,8 @@ let merged = $.extend(true, {}, chara1, chara2);
 | proxy()            | 
 | inArray()          | 値を検索してインデックスを返す なければ-1
 
+|-|-
+|-|-
 | contains(elm)      | 子孫要素かどうか
 | isEmptyObject()    | 
 | isFunction()       | 

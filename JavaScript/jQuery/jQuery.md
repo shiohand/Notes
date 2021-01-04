@@ -642,7 +642,8 @@ thisはvanillaと同じなので、jQueryで使用するときは$(this)の形�
 
 ### hover()
 
-オブジェクト.hover(func1, func2)  ホバーイベント用のjQueryオブジェクトメソッド
+オブジェクト.hover(func1, func2)
+ホバーイベント用のjQueryオブジェクトメソッド
 
 ```js
 $('#menu').hover(function() {
