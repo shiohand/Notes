@@ -1,0 +1,557 @@
+// メソッドではない 言語構造
+array()
+  配列を作成する
+list()
+  複数の変数に
+
+// boolean
+issset(オブジェクト)  値を持つか否か
+is_null()
+is_array()
+is_bool()
+
+// アクセス修飾子
+public すべて
+protected サブクラス
+private 自クラスのみ
+
+
+date_default_timezone_set()  タイムゾーン設定
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// 文字列
+strlen(文字列)        文字列長。
+trim(文字列)          文字列の前後のホワイトスペースを取り除く。
+substr(文字列, 開始点, 文字数)
+  文字列の取り出し 開始点マイナスは末尾から数える
+str_replace(前, 後, 文字列)
+strtr(文字列, array('前' => '後', '前' => '後'...))
+strtolower(文字列)    キャピタライズ（lower）
+strtoupper(文字列)    キャピタライズ（upper）
+ucwords(文字列)       先頭文字のみ大文字
+number_format(数値)   桁区切りとかフォーマットしてくれる
+
+// フォーマット出力
+printf('文字列%.2f', $price * (1 + $tax));
+小数点以下二桁のfloatで表示(五捨六入)
+
+%d 整数 %f 小数 %s 文字列
+パディング文字 文字列が足りないときにどの字で埋めるか
+符号  [+]正の数の符号を省略しない [-]右寄せ
+最小幅  最小幅
+小数点  .2  なら二桁
+
+// 比較
+strcmp($a, $b);      宇宙演算子と同じ
+strcasecmp($a, $b);  大文字小文字を区別しない
+
+// 配列
+count(配列)  要素数を取得
+unset(要素)  要素の削除
+array_splice(配列, 開始位置[, 要素数[, 配列]])
+
+sort(配列)   要素順  ただし連想配列のキーは数値に置き換わる
+asort(配列)  要素順  連想配列のキーを保持
+ksrot(配列)  キー順
+rsort(配列) arsort(配列) krsort(配列)  各ソートの降順
+array_reverse(配列)  逆順
+
+array_key_exists(キー, 配列)  boolean 配列にキーがあるかどうか
+in_array(値, 配列)           boolean 配列に値があるかどうか
+array_search(値, 配列)       キー 値を持つキーを返す
+  要素の削除(一つ以上)、または同時に別の配列の内容に置換
+
+
+var_export(変数)  変数、配列の内容を出力
+var_dump(配列)
+  配列の要素を全て出力する
+  <pre>var_dump()</pre> // HTMLに出力する例
+implode(区切り文字, 配列)
+  配列の要素を区切り文字を挟んで連結、文字列を返す
+  print '<tr><td>' . implode('</td><td>', 配列) . '</td></tr>';
+  print '<ul><li>' . implode('</li><li>', 配列) . '</li></ul>';
+explode(区切り文字, 文字列)
+  文字列を区切り文字の位置で分割、配列を返す
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// 名前空間
+namespace 名前空間\名前空間サブ\{名前};
+use 名前空間\クラスなど;
+use 名前空間 as ○○ // ○○で呼べる
+
+// スーパーグローバル変数
+とにかく特別な変数
+$GLOBALS   グローバルスコープに定義済みの変数が連想配列ではいっている
+$_SERVER   WEBサーバーにより生成される(必ずされるとは限らない)
+$_GET      URLから クエリ
+$_POST     POSTメソッドから
+$_FILES    POSTメソッドからのアップロード？
+$_COOKIE   クッキー
+$_SESSION  セッション
+$_REQUEST  $_POST, $_GET, $_COOKIE のまとめ
+$_ENV      環境変数
+
+// $_SERVER の変数の例
+パス系
+  http://www.example.com/php/path_info.php/some/stuff?foo=bar
+ヘッダ情報取得
+  $_SERVER['HTTP_ヘッダ名'] // ヘッダ名の'-'は'_'に
+
+REQUEST_URI      リクエストされたURI(相手が要求してる)
+PHP_SELF         リクエストのパス部分 formのactionに入れておけば楽
+QUERY_STRING     ?以降のクエリ部分
+PATH_INFO        パスとファイル名
+REQUEST_METHOD   リクエストがGETかPOSTか
+SERVER_NAME      Webサイト名。仮想ドメインなら仮想ドメイン名。
+DOCUMENT_ROOT    なんかWebサーバーコンピュータ上のディレクトリらしいよ
+HTTP_HOST        リクエストのホスト名
+HTTPS            リクエストがHTTPSなら'on' でなければ空
+SCRIPT_NAME      スクリプトのパス名
+
+REMOTE_ADDR      リクエスト者のIPアドレス
+REMOTE_HOST      リクエスト者のホスト名
+HTTP_ACCEPT      ACCEPTヘッダ 受け取れるフォーマット
+HTTP_REFERER     遷移前のページのアドレス 偽装できるけど
+HTTP_USER_AGENT  ブラウザ情報 偽装できるけど
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// フォーム利用
+filter_input(取得対象, 対象変数, フィルタ[, オプション])
+  正しければ値そのまま, 誤りならfalse, 入力がなければnull
+取得対象  INPUT_GET/POST/COOKIE/SERVER/ENV
+対象変数  'キーになる部分'
+フィルタ  FILTER_VALIDATE_BOOLEAN/FLOAT/INT/EMAIL/URL/IP/MAC
+オプション
+  INT    min_range, max_range
+  FLOAT  decimal, min_range, max_range
+利用例
+  $input['age'] = filter_input(INPUT_POST, 'age', FILTER_VALIDATE_INT,
+    array('options' => array('min_range' => 18, 'max_range' => 65)));
+  // optionを連想配列にを、array('options' => の値として渡す)
+
+filter_var(対象変数, フィルタ[, オプション])  もあるらしい
+
+サニタイジング
+  htmlentities() 主に使う
+  strip_tags() 変換基準がザルな方
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// データベース
+データベースへの接続
+  new PDO('{DSN接頭辞}:{DSNオプション}', '{ユーザ名}', '{パスワード}');
+
+setAttribute(プロパティ, 値)
+エラーモード PDO::ATTR_ERRMODE
+  // デフォルト サイレント
+  PDO::ERRMODE_EXCEPTION // 例外エラーモード
+  PDO::ERRMODE_WARNING // 警告エラーモード
+フェッチスタイル PDO::ATTR_DEFAULT_FETCH_MODE
+  PDO::FETCH_NUM   $row[0], $row[1];
+  PDO::FETCH_ASSOC $row['dish_name'], $row['price'];
+  PDO::FETCH_OBJ   $row->dish_name, $row->price;
+    または
+    クエリに setFetchMode() で指定
+    クエリからの取り出し時に fetch() らの引数で指定
+
+$db->errorInfo() サイレントでのエラー取得など
+  [0]一般エラー [1]使用中のデータベース固有のエラー [2]エラーメッセージ
+
+
+exec(SQL文)   データベースの変更 戻り値は行数、失敗でfalse
+query(SQL文)  データの取得 戻り値はPDOStatement
+fetch(), fetchAll()
+  PDOStatementから一つずつキーバリュー取得、または全て連想配列で取得
+
+プリペアステートメント PDOの機能 サニタイジング
+prepare(SQL文) プレースホルダ '?'。
+execute(array) ?に挿入する値。配列。
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// ファイル
+ひとつのファイルをまとめて読み込み、書き込み
+file_get_contents(ストリームの対象, インクルードパス(boolean), コンテキスト)
+  コンテキストはstream_contexext_create()で(APIあたり)
+file_put_contents(ストリームの対象, 内容)
+file()  ファイルを1行ずつの配列として読み込み
+
+fopen(), fgets(), feof(), fclose()
+  open ファイルへの接続をオープンし、ファイルへのアクセスを変数として返す
+  gets 1行を読み込んで文字列として返し、次の行へ進む
+  eof ファイルの末尾を超えたらtrueを返す
+  close 接続をクローズする
+
+open()の第二引数
+  rb  R  既存ファイルのみ     絶対読む
+  wb  W  読み込み時に内容消去  絶対書く
+  ab  W  末尾開始           逆張り
+  xb  W  新規ファイルのみ     ニュービー感
+  cb  W  内容を空にしない     wbじゃない方
+  末尾+(rb+, cb+など)       読み書き可能
+fwrite()  書き込み
+
+fgetcsv(), fputcsv()
+  CSVファイル使うよ宣言が必要
+    header('Content-Type: text/csv');
+    header('Content-Disposition: attachment; filename="dishes.csv"');
+
+パーミッション(アクセス権)の検査
+file_exists()  存在の有無
+is_readable()  読めるか
+is_writeable() 書けるか
+
+umask()  ファイル作成時にパーミッションを設定
+
+エラーチェック エラー時は警告メッセージ&falseを返す
+$php_errormsg  track_errors を有効にするとメッセージが入る
+
+realpath() パスを絶対パスにして返すたぶん
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// クッキー・セッション
+$_COOKIE 初回はもちろん、setcookie()直後も値は入っていない
+
+setcookie(キー, 値[, 有効期限, options])
+  必ずプログラムの先頭に記述(HTMLのhead部分的なこと)
+  削除は空文字を入れ直す オプションは設定時に付けたオプションに合わせる
+
+setcookie()引数まとめ
+setcookie(name[, value, expire, path, domain, secure, httponly])
+  キー, バリュー, 期限, // きほんみっつ
+  パス, ドメイン, // '/', null, などにもなる
+  secure, HttpOnly // secureはまずtrue
+
+$_SESSION クッキーと同じく、初回は値は入っていない
+
+session_start()
+  デフォルトではPHPSESSIDというクッキーを用いる
+  必ずプログラムの先頭に記述(HTMLのhead部分的なこと)
+  引数に連想配列(['cookie_lifetime' => 600, 'read_and_close' => true]など)を渡して設定できる
+setcookie()で設定する場合
+  session.name
+  session.cookie_lifetime
+  session.cookie_path
+  session.cookie_domain
+  session.cookie_secure
+  session.cookie_httponly
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// cURL
+curl_init(URL)  ハンドルを作成して返す
+curl_setopt(ハンドル, オプション, 値)   制御を追加 CURLOPT_なんたら
+  CURLOPT_RETURNTRANSFAR 文字列として返す (デフォはすぐ出力)
+  CURLOPT_HTTPHEADER     HTTPヘッダ情報追加
+  CURLOPT_POST           booleanで設定 POSTリクエストにする
+  CURLOPT_POSTFIELDS     POSTするオブジェクトを設定
+  CURLOPT_HEADER         trueの場合はヘッダの内容も出力
+curl_exec(ハンドル)     実行。リクエストを取得
+
+エラー処理関連
+curl_exec(ハンドル)
+  リクエストが通らなかいなどのエラー発生時にfalseを返す
+  リクエストが通った後に発生したエラーは別途調べる必要あり
+curl_errno(ハンドル)
+  リクエスト失敗時にエラーコードが入る
+curl_error(ハンドル)
+  エラーコードに対応するエラーメッセージ
+curl_getinfo(ハンドル)
+  リクエストに関する情報を配列で返す。うち一つはHTTPレスポンスコード
+  curl_exec()の成功の他にレスポンスコードも確認するため
+  ['http_code'] レスポンスコード
+  ['total_time'] なんか時間。こういう統計データも探せばある。
+
+クッキーの追跡
+curl_setopt(ハンドル, 'CURLOPT_COOKIEJAR', true);
+  ハンドルはクッキーを追跡。ハンドルが生きている間(プログラム終了まで)は有効。
+
+curl_setopt(ハンドル, 'CURLOPT_COOKIEJAR', ファイル名);
+curl_setopt($c, 'CURLOPT_COOKIEFILE', ファイル名);
+  ファイルに保存して使う ファイルがあればずっと有効。
+  リクエスト間でのクッキーの追跡
+
+// API利用
+stream_context_create(連想配列)
+  追加情報を設定
+  stream_context_create(array(
+    'http' => array(
+      'method' => 'POST',
+      'header' => 'Context-Type: application/json',
+      'content' => http_build_query($form_data)
+    )
+  ));
+
+HTMLレスポンス
+header(文字列)
+  ヘッダ情報の追加
+  header("Location: 表示するURL")でページ遷移
+http_responce_code(数値)
+  レスポンスコードの指定 403はForbidden 404はNotFound など
+
+クエリ作成
+  html_build_query(連想配列)
+jsonエンコード、デコード
+  json_encode(連想配列), json_decode(jsonファイル)
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// デバッグ
+構成ディレクティブ
+  error_reporting
+    デフォルト E_ALL & ~E_NOTICE & ~E_STRICT (注意と非推奨警告以外全て)
+    報告されるエラーの種類を制御
+  display_errors  エラーをブラウザに表示
+  log_error       エラーをエラーログに送信
+
+E_ALL
+E_PERSE   パースエラー
+E_ERROR   エラー
+E_WARNING 警告
+E_NOTICE  注意
+E_STRICT  厳格注意
+
+エラーログ出力
+  error_log(文字列)
+出力場所を内部バッファに変更して＋エラーログの送信
+  開始 ob_start();
+  出力 確認したいもの
+  取得 $output = ob_get_contents();
+  終了 ob_end_clean();
+  error_log($output);
+
+// 例外処理
+未補足例外の処理
+set_exception_handler(処理用の関数)
+  例外が発生したときは例外処理用の関数を実行させる
+  ！ try-catchと違ってプログラムは終了する
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// テスト
+PHPUnit  テストのデファクトスタンダード
+インストール
+  実行可能形式に chmod a+x phpunit.phar
+  実行        ./phpunit.phar -version
+  (PHPコマンドラインでは実行だけ)
+
+テスト用のクラスを作成
+  PHPUnit_Framework_TestCaseを継承
+テスト用のメソッドを作成
+  test〇〇という名前でメソッドを作成(慣習)
+テスト
+  $this->assert○○(予想される答え, 実際の答え)
+    assertEquals // ==判定
+    assertSame // ===判定
+    assertContains // 含まれるか
+    assertCount // 要素数の一致か
+PHPUnitプログラム側へ渡してテスト (コードはtst1.phpへ)
+  phpunit.phar RestaurantCheckTest.php
+
+テスト駆動開発 TDD:Test-Driven Development
+  コード書く前にテスト書いておいて、テストに通ることを目標とする
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// 開発環境
+バージョン管理  Git
+
+PSR-4 (PHP Standard Recommendation (PHP標準勧告))
+  管理しやすくする規約
+
+課題管理(イシュートラッキング)システム  MantisBTなど
+
+環境とデプロイ(本番環境への反映)
+  環境固有の構成情報とコードは分離させる
+    構成情報は別ファイルで管理、プログラムは構成ファイルを読み込んで利用
+  parse_ini_file(ファイル名)
+    iniファイルをロード、連想配列として設定値を返す
+
+PHPエンジンのパフォーマンスデータの収集
+  プロファイラを利用(Xdebug, XHProfなど)
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// 日付と時刻
+new DateTime(文字列)  インスタンス生成
+
+DateTimeオブジェクト
+format(文字列)
+   年月日 Y/m/d // 大きいY、m, d
+  0年月日 y/n/j // 小さいy, mの手前, じゃないほうのj
+  12時/0 g/h
+  24時/0 G/H
+  分秒    i/s   // iがいっぱいだからi 
+  月名    M     // 大きいM
+  略月    F     // とにかくF
+  曜日    l     // とにかくl
+  略曜    D     // ○○DayのD
+setDate() 日付
+setTime() 時刻
+checkdate(日付)  boolean 月と日がそれ単体で有効な日付かの検証
+modify(期間)     相対的に時刻を移動
+diff(時刻)       時刻との差をDateIntervalで返す
+
+DateIntervalオブジェクト
+y  m  d  h  i  s  f
+年　月　日　時　分　秒　マイクロ
+days 日付間の総日数
+invert 期間が正の数なら0を、0または負の数なら1を返す。
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// パッケージ管理
+Composerのインストール
+普通に公式からダウンロード・インストール
+コマンドでダウンロード・実行
+  curl -sS https://getcomposer.org/installer | php
+
+composer.json  プロジェクトに関する設定やインストールしたパッケージを管理
+composer.lock  パッケージのバージョンを管理
+
+プログラムへパッケージを追加(今回はSwiftMailer)
+コマンドでインストール
+  php composer.phar require swiftmailer/swiftmailer
+    現在地のvendorディレクトリにインストールし、composer.jsonを更新する
+バージョン管理システムと連携
+  composer.json, composer.lockだけ同期
+Composerパッケージリポジトリ(利用可能パッケージの一覧サイト)
+  Packagist キーワード検索できる。
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// Swift Mailer
+Swift Mailerの利用
+  Swift_Message::newInstance()
+    メッセージ-obj->set(○○)
+      setFrom('アドレス') // array('アドレス' => '表示名')でも
+      setTo('アドレス')   // array('アドレス' => '表示名')でも
+      setSubject('')
+      setBody('内容') // HTMLの場合、第2引数にMIMEタイプを指定
+  Swift_SmtpTransport::newInstance('ホスト', ポート番号)
+  Swift_Mailer::newInstance(トランスポートobj)
+  メーラーobj->send(メッセージobj)
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// フレームワーク
+  リクエストとレスポンスのための処理などをつなぐ
+オブジェクト関係マッピング
+  データベースを変更するためのメソッドを提供
+ユーザ管理
+  利用者のユーザ情報管理、権限管理
+
+メジャーなフレームワーク
+  Laravel, Symfony, Zend Framework
+
+---Laravel---
+
+インストール  php composer.phar global require laravel/installer=~1.1"
+プロジェクト作成  laravel new プロジェクト名
+ディレクトリ作成  laravel new ディレクトリ名
+(composer) $ composer create-project laravel/laravel menu "5.1.*"
+
+プロジェクトディレクトリのserver.phpでサーバを起動
+  php -S localhost:8000 -t menu2/public menu/server.php
+  (-tは提供するルートディレクトリを変更している)
+
+ルーティングの制御
+  app/Http/routes.phpで制御
+  Route::get(ルート, 処理); // Route::postだたり
+view
+  view() resources/viewsディレクトリから
+エスケープとかはBladeテンプレートエンジンが便利だそうだよ知らんけど
+
+---Symfony---
+  コンポーネントの集合でもある テンプレート作成とかデバッグとかで部分的に使うこともできる
+
+ダウンロードしたインストーラーのファイル名をsymfonyに変更
+chmod a+x symfonyまでのフルパス で実行
+プロジェクト作成  symfony new プロジェクト名
+ディレクトリ作成  symfony new ディレクトリ名
+(composer) $ composer creqate-project symfony/framework-standard-edition プロジェクト名
+(composer) $ (cd project_name; php app/console server:run)
+
+プロジェクトディレクトリでサーバを起動
+php app/console server:run
+
+ルーティングの制御
+  ルーティングをまとめたファイルは無い
+  src/AppBundle/Controllerディレクトリの個々のクラスでルーティングを設定
+  対応するルートをコメントで注記
+view
+  $this->render() app/Resources/viewディレクトリから
+viewはデフォルトではTwigテンプレートエンジン
+慣れると便利だけど普通のPHPでもいい
+
+---Zend Framework---
+  他二つよりさらにコンポーネント寄り
+  なので一部取り出して使うのは簡単だが全部使おうとするとちょっと難しい
+
+インストール(スケルトン)
+composerでインストール
+  $ composer create-project --no-interaction --stability="dev" zendframework/skeleton-application menu
+プロジェクトディレクトリでサーバー起動
+  php -S localhost:8000 -t public/ public/index.php
+
+モジュール
+  関連するアプリケーションコードをmodulesにまとめる
+  大規模アプリケーションでは大まかな部分ごとに分けることもある
+Applicationベースモジュール
+  /Application以下のパスをコントローラクラスのコードにマッピングするデフォルトルーティングロジック
+view
+  new ViewModel オブジェクトを作成
+
+ベースモジュールにコードを追加
+module/Application/src/Application/Controller
+MenuController.php
+フレームワークに新しいクラスについて知らせる
+module/Application/config/module.config.phpの'controllers'の定義部分に追加
+デフォルトではエスケープしていないので今回はescapeHtml()してみた
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// コマンドライン
+コマンドライン引数へのアクセス
+php weather2 19096
+  の場合、argv[0]がweather2 argv[1]が19096になる。
+
+php -S localhost:8000 -t /home/mario/web
+  -SでPHPの組み込みWebサーバの使用(今回は8000)
+  -tはドキュメントルートディレクトリの変更
+php -a
+  組み込みWebサーバでPHP REPLの利用 console的な
+PsySH
+  組み込みじゃないREPL的なやつもある
+
+≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡
+
+// ローカライゼーション
+
+mbstring拡張モジュール
+  通常のstring操作では2バイト文字に対応していないため、全角の英数を扱うときなどにもmbstring拡張機能がなければ正確に処理できない場合がある。
+
+mb_strlen(文字列)      2バイト文字対応
+mb_strtolower(文字列)  全角英字対応
+mb_strtoupper(文字列)
+
+mb_convert_encoding(文字列, 文字コード)  SJISなどに変換
+
+mail() 英語基準
+mb_send_mail($to, $subject, $body)
+  mbstring.language構成変数にJapaneseを指定していること
+mb_encode_mimeheader(文字列)
+  宛先(to)に日本語を使用しているとき必要
+
+Collatorクラス
+  new Collator(ロケール文字列)
+  ロケール文字列 '言語コード_国コード'の形
+sort(), asort(), compare()などを使える
+
+MessageFormatterクラス
+  new MessageFormatter(ロケール文字列, 文字列)
+    波括弧をプレースホルダとして使える
+  オブジェクト->format(波括弧に代入する内容の配列)

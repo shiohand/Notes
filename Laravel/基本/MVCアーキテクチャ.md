@@ -12,13 +12,14 @@
   * 表示用テンプレートなど
 * Controller
   * 全体の制御
+  * アクションメソッドに処理を定義
   * Modelを使ってデータを取得
   * Viewを利用して画面表示を作成
 
 ### それぞれのつながり
 
 * Webアプリケーションにアクセス
-  * Controller
+  * Controller(アクションメソッド)
     * View
       * テンプレート
     * Model
@@ -30,15 +31,15 @@
 ### Q.
 なぜ引数を追加したら自動で取得してくれる？
 ```php
-/* コントローラのアクションでRequestとResponseが湧いてくる例 */
-public function index(Request $request, Response $response) {}
+/* コントローラのアクションでRequestが湧いてくる例 */
+public function index(Request $request) {}
 ```
 
 ### A.
-Laravelの機能が入ったプログラムであるサービスが
-いっぱいつまったサービスコンテナが
-自動で対応するクラスのインスタンスを
-引数に渡してくれるから
+Laravelの機能が入ったプログラムであるサービス
+が、いっぱいつまったサービスコンテナ
+が、自動で対応するクラスのインスタンス
+を、引数に渡してくれるから
 
 * サービスインジェクション
 \- インジェクション……？　Dependency Injection！　そゆことー。
