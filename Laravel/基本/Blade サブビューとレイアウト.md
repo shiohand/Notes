@@ -5,14 +5,14 @@
   - [`@each()`](#each)
 - [レイアウト](#レイアウト)
   - [`@extends('ビュー')`](#extendsビュー)
-  - [`@section('名前')`](#section名前)
+  - [`@section('セクション')`](#sectionセクション)
     - [`@parent`](#parent)
-  - [`@yield('名前')`](#yield名前)
+  - [`@yield(セクション名[, default])`](#yieldセクション名-default)
 - [例](#例)
   - [土台](#土台)
   - [継承](#継承)
 - [コンポーネント](#コンポーネント)
-  - [`@component('名前')`](#component名前)
+  - [`@component('ビュー')`](#componentビュー)
   - [`@slot('変数名')`](#slot変数名)
 - [例](#例-1)
 
@@ -76,26 +76,37 @@ public function index()
 レイアウトを継承し、いくつものテンプレートをセクションとして組み合わせてレイアウトを作成していく機能
 レイアウト用のフォルダとして`resources/views/layouts`とでも
 
+* `@extends('ビュー')`
+* `@section('セクション')`
+  * `@section('セクション') @show`
+  * `@section('セクション') @endsection`
+  * `@section('セクション', '値')`
+  * `@parent`
+* `@yield(セクション名[, default])`
+* `@component('ビュー')`
+* `@slot('変数名')`
+
+
 ### `@extends('ビュー')`
 テンプレートを利用する
 クラスの継承と考え方は同じ
 ビューはレンダリングのview()と同じ形式
 
-### `@section('名前')`
+### `@section('セクション')`
 区画を定義する
 継承先で内容を作成するための区画
 
 ```php
-@section('名前')
+@section('セクション')
 @endsection
 ```
 * 一つの文字列で住むなら第二引数に入れてもよい
 ```php
-@section('名前', '値')
+@section('セクション', '値')
 ```
 * 土台になるレイアウトでは@showで閉じる
 ```php
-@section('名前')
+@section('セクション')
 @show
 ```
 * 継承元にあるセクションを再定義すると上書きされる
@@ -104,18 +115,18 @@ public function index()
 継承元にあるセクションの内容を維持できる
 
 ```php
-@section('名前')
+@section('セクション')
   // 追加する記述
   @parent
   // 追加する記述
 @endsection
 ```
 
-### `@yield('名前')`
+### `@yield(セクション名[, default])`
 定義した区画を出力する
 
 ```php
-@yield('名前')
+@yield('セクション')
 ```
 `<title>@yield('title')</title>` のように、文中でもよいみたい
 
@@ -186,7 +197,7 @@ public function index()
 
 テンプレートに組み込む際に変数を渡すことができ、HTMLやスクリプトも反映される
 
-### `@component('名前')`
+### `@component('ビュー')`
 テンプレートを呼び出す
 
 ```php

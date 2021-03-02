@@ -59,8 +59,8 @@ jsのフレームワークで必要なときとか
 | -------------- | ---------------------------- |
 | @if (条件)     | 条件が真の場合(続き↓)        |
 | @unless (条件) | 条件が偽の場合               |
-| @empty(変数)   | 変数が存在しない               |
-| @isset(変数)   | 定義済みの場合(nullは未定義) |
+| @isset(変数) | 変数が存在する(nullは未定義) |
+| @empty(変数) | 変数が存在しないまたは空     |
 | @switch(値)    | switch(続き↓)                |
 
 それぞれ `@else`, `@break` も可能
@@ -92,6 +92,8 @@ jsのフレームワークで必要なときとか
 | @foreach ($iterable as $仮変数) | foreach        |
 | @forelse ($iterable as $仮変数) | forelse(続き↓) |
 | @while (条件)                   | while          |
+
+※ foreach系の仮変数は`$key => $value`可能
 
 * forelse
 ```php
